@@ -1,0 +1,124 @@
+/* public/styles/mechanicHomepage.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.background-image {
+    background-image: url('/images/mechanicHomepageBK.png'); /* Adjust the background image */
+    background-size: cover;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: -1;
+}
+
+.content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content {
+    background-color: rgba(255, 255, 255, 0.7); /* Adjust the alpha (4th value) for transparency */
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.header {
+    background-color: rgba(200, 200, 200, 0.7); /* Light gray with transparency */
+    color: black;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; /* Ensure the header is above the background image */
+}
+
+/* Buttons Panel Styles */
+.buttons-panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Add a smooth transition on hover */
+    margin: 5px;
+}
+
+.color1 {
+    background-color: #FF5733; /* Orange */
+    color: white;
+}
+
+.color2 {
+    background-color: #337DFF; /* Blue */
+    color: white;
+}
+
+.color3 {
+    background-color: #33FF69; /* Green */
+    color: white;
+}
+
+.color4 {
+    background-color: #FF33F6; /* Pink */
+    color: white;
+}
+
+.color5 {
+    background-color: #FFE333; /* Yellow */
+    color: white;
+}
+
+.color6 {
+    background-color: #330BFF; /* Purple */
+    color: white;
+}
+
+.button:hover {
+    opacity: 0.8; /* Reduce opacity on hover for a subtle effect */
+}
+
+/* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(200, 200, 200, 0.7); /* Light gray with transparency for footer */
+    color: black;
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Align items with space between */
+}
+
+.footer p {
+    margin: 0; /* Remove default margin for paragraphs */
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
