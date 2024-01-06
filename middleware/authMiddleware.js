@@ -6,9 +6,9 @@ module.exports = function (req, res, next) {
     } else {
         // Skip redirection for login, registerPage1, and registerPage2 routes
         if (
-            req.originalUrl === '/loginPage' ||
-            req.originalUrl === '/registerPage1' ||
-            req.originalUrl === '/registerPage2'
+            req.path === '/loginPage' ||
+            req.path === '/registerPage1' ||
+            req.path === '/registerPage2'
         ) {
             return next();
         }
