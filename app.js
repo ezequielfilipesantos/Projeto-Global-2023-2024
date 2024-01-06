@@ -42,16 +42,24 @@ app.use(session({
 // Use the authMiddleware for all routes
 app.use(authMiddleware);
 
-// Use the new index route
-app.use('/', indexRouter);
+// Define routes
 
-// Use the login route
-const loginRouter = require('./routes/loginRouter')(pool);
-app.use('/loginPage', loginRouter);
+// Login Page
+app.get('/loginPage', (req, res) => {
+    res.send('This is the login page');
+});
 
-// Use the homepage route with authMiddleware
+// Registration Pages
+app.get('/registerPage1', (req, res) => {
+    res.send('This is register page 1');
+});
+
+app.get('/registerPage2', (req, res) => {
+    res.send('This is register page 2');
+});
+
+// Index Page (using indexRouter with authMiddleware)
 app.use('/indexPage', indexRouter);
-//page//router
 
 // Start the Server
 app.listen(port, () => {
