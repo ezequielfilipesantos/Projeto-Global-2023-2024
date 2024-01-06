@@ -4,11 +4,6 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const authMiddleware = require('./middleware/authMiddleware');
 const indexRouter = require('./routes/indexRouter');
-const mechanicHomepageRouter = require('./routes/mechanicHomepageRouter');
-const addInterventionRouter = require('./routes/addInterventionRouter');
-const searchVehicleByLicensePlateRouter = require('./routes/searchVehicleByLicensePlateRouter');
-const searchVehicleByOwnerNIFRouter = require('./routes/searchVehicleByOwnerNIFRouter');
-const searchOwnerByNIFRouter = require('./routes/searchOwnerByNIFRouter');
 
 const app = express();
 const port = 3000;
@@ -52,22 +47,11 @@ app.use('/', indexRouter);
 
 // Use the login route
 const loginRouter = require('./routes/loginRouter')(pool);
-app.use('/login', loginRouter);
+app.use('/loginPage', loginRouter);
 
-// Use the mechanic homepage route with authMiddleware
-app.use('/mechanicHomepage', mechanicHomepageRouter);
-
-// Use the new addIntervention route
-app.use('/mechanicHomepage', addInterventionRouter);
-
-// Use the new searchVehicleByLicensePlate route
-app.use('/mechanicHomepage', searchVehicleByLicensePlateRouter);
-
-// Use the new searchVehicleByOwnerNIF route
-app.use('/mechanicHomepage', searchVehicleByOwnerNIFRouter);
-
-// Use the new searchOwnerByNIF route
-app.use('/mechanicHomepage', searchOwnerByNIFRouter);
+// Use the homepage route with authMiddleware
+app.use('/indexPage', indexRouter);
+//page//router
 
 // Start the Server
 app.listen(port, () => {

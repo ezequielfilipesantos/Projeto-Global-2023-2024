@@ -6,7 +6,7 @@ const router = express.Router();
 module.exports = function(pool) {
   // GET route for rendering login view
   router.get('/', (req, res) => {
-    res.render('login');
+    res.render('loginPage');
   });
 
   // POST route for handling login

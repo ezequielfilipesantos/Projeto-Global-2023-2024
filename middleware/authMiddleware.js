@@ -8,6 +8,6 @@ module.exports = function(req, res, next) {
         if (req.originalUrl === '/' || req.originalUrl === '/login') {
             return next();
         }
-        res.redirect('/login'); // Redirect to login if not authenticated
+        res.redirect('/loginPage'); // Redirect to login if not authenticated
     }
 };
