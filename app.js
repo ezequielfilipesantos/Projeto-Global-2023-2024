@@ -4,6 +4,8 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const authMiddleware = require('./middleware/authMiddleware');
 const indexRouter = require('./routes/indexRouter');
+const registerRouter = require('./routes/registerRouter'); // Import the registerRouter
+const loginRouter = require('./routes/loginRouter'); // Import the loginRouter
 
 const app = express();
 const port = 3000;
@@ -45,18 +47,10 @@ app.use(authMiddleware);
 // Define routes
 
 // Login Page
-app.get('/loginPage', (req, res) => {
-    res.send('This is the login page');
-});
+app.use(loginRouter); // Mount the loginRouter
 
-// Registration Pages
-app.get('/registerPage1', (req, res) => {
-    res.send('This is register page 1');
-});
-
-app.get('/registerPage2', (req, res) => {
-    res.send('This is register page 2');
-});
+// Use the registerRouter for the /registerPage1 and /registerPage2 routes
+app.use(registerRouter);
 
 // Index Page (using indexRouter with authMiddleware)
 app.use('/indexPage', indexRouter);
