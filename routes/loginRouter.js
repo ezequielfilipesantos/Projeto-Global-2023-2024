@@ -25,7 +25,7 @@ module.exports = function(pool) {
           req.session.isAuthenticated = true;
 
           // Redirect to mechanicHomepage if authentication is successful
-          res.redirect('/mechanicHomepage');
+          res.redirect('/indexPage');
         } else {
           // Incorrect password
           res.send('Incorrect password');
