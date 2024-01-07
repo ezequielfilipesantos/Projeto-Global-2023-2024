@@ -63,19 +63,42 @@ CREATE TABLE UtenteResidência (
 -- ALTER TABLE UtenteResidência
 -- ADD CONSTRAINT FKUtenteResi649377 FOREIGN KEY (MoradaID) REFERENCES UtenteIdentificação (UtenteID);
 
-------NAO FUNCIONA---------
--- Test the AddUtenteResidencia function to add residence data for UtenteID 1
-SELECT AddUtenteResidencia(
-    1, -- UtenteID = 1
-    '123 Main St', -- New RuaResidência
-    'Example Freguesia', -- New FreguesiaResidência
-    'Example Concelho', -- New ConcelhoResidência
-    '12345-678' -- New CodigoPostalCP
-);
-
------------
-
 
 --------------------------outra reparacao
 
+-- Drop the existing tables if they exist
+DROP TABLE IF EXISTS UtenteResidência;
+DROP TABLE IF EXISTS UtenteResidênciaCP;
+DROP TABLE IF EXISTS UtenteContacto;
+
+-- Create a new UtenteResidênciaCP table
+CREATE TABLE UtenteResidênciaCP (
+    CP VARCHAR(100) NOT NULL,
+    Localidade VARCHAR(100),
+    PRIMARY KEY (CP)
+);
+
+-- Create a new UtenteResidência table
+CREATE TABLE UtenteResidência (
+    MoradaID SERIAL NOT NULL,
+    RuaResidência VARCHAR(100),
+    FreguesiaResidência VARCHAR(100),
+    ConcelhoResidência VARCHAR(100),
+    CodigoPostalCP VARCHAR(100) NOT NULL,
+    UtenteIdentificaçãoUtenteID INT4 NOT NULL,
+    PRIMARY KEY (MoradaID),
+    CONSTRAINT fk_utente_residencia_utente_id
+        FOREIGN KEY (UtenteIdentificaçãoUtenteID)
+        REFERENCES UtenteIdentificação(UtenteID)
+);
+
+-- Create a new UtenteContacto table
+CREATE TABLE UtenteContacto (
+    Telefone INT4 NOT NULL,
+    UtenteIdentificaçãoUtenteID INT4 NOT NULL,
+    PRIMARY KEY (Telefone, UtenteIdentificaçãoUtenteID),
+    CONSTRAINT fk_utente_contacto_utente_id
+        FOREIGN KEY (UtenteIdentificaçãoUtenteID)
+        REFERENCES UtenteIdentificação(UtenteID)
+);
 

@@ -37,7 +37,7 @@ SELECT AlterUtenteAttributes(
     'Updated Country'
 );
 ----------
-
+---codigo postal
 
 -- Test the AddUtenteResidencia function to add residence data for UtenteID 1
 SELECT AddUtenteResidencia(
