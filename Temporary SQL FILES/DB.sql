@@ -64,11 +64,18 @@ CREATE TABLE UtenteResidência (
 -- ADD CONSTRAINT FKUtenteResi649377 FOREIGN KEY (MoradaID) REFERENCES UtenteIdentificação (UtenteID);
 
 ------NAO FUNCIONA---------
+-- Test the AddUtenteResidencia function to add residence data for UtenteID 1
 SELECT AddUtenteResidencia(
     1, -- UtenteID = 1
-    '123 Main St',
-    'Example Freguesia',
-    'Example Concelho',
-    '12345-678'
+    '123 Main St', -- New RuaResidência
+    'Example Freguesia', -- New FreguesiaResidência
+    'Example Concelho', -- New ConcelhoResidência
+    '12345-678' -- New CodigoPostalCP
 );
+
 -----------
+
+
+--------------------------outra reparacao
+
+

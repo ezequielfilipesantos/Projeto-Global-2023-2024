@@ -39,5 +39,24 @@ SELECT AlterUtenteAttributes(
 ----------
 
 
+-- Test the AddUtenteResidencia function to add residence data for UtenteID 1
+SELECT AddUtenteResidencia(
+    1, -- UtenteID = 1
+    '123 Main St', -- New RuaResidência
+    'Example Freguesia', -- New FreguesiaResidência
+    'Example Concelho', -- New ConcelhoResidência
+    '12345-678' -- New CodigoPostalCP
+);
+
+
+-- Test the AlterUtenteResidencia function to update residence data for UtenteID 1
+SELECT AlterUtenteResidencia(
+    1, -- UtenteID = 1
+    '456 Oak St', -- New RuaResidência
+    'New Freguesia', -- New FreguesiaResidência
+    'New Concelho', -- New ConcelhoResidência
+    '98765-432' -- New CodigoPostalCP
+);
+
 
 
