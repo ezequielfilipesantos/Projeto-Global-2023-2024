@@ -6,11 +6,11 @@ module.exports = function(req, res, next) {
       return next();
     } else {
       // Skip redirection for the login route
-      if (req.path === '/login') {
+      if (req.path === '/loginPage') {
         return next();
       }
       // Redirect to the login route for all other routes
-      res.redirect('/login');
+      res.redirect('/loginPage');
     }
   };
   

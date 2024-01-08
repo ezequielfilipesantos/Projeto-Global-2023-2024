@@ -1,34 +1,27 @@
-// app.js
+//app.js
 const express = require('express');
 const session = require('express-session');
 const { Pool } = require('pg');
-
 const authMiddleware = require('./middleware/authMiddleware');
-const loginRouter = require('./routes/loginRouter'); // Import the loginRouter
-const indexRouter = require('./routes/indexRouter');
-const registerRouter = require('./routes/registerRouter'); // Import the registerRouter
 
 const app = express();
 const port = 3000;
 
 // Database Connection
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'juntadb',
-    password: 'magali712',
-    port: 5432,
+  user: 'postgres', // Correct the database user
+  host: 'localhost',
+  database: 'juntadb',
+  password: 'magali712',
+  port: 5432,
 });
 
-pool.connect((err, client, release) => {
-    if (err) {
-        console.error('Error acquiring client', err.stack);
-        process.exit(1); // Exit the process if the database connection fails
-    } else {
-        console.log('Connected to the database');
-        release();
-    }
-});
+// Session Configuration
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false, // Set to false to avoid session save on every request
+    saveUninitialized: true,
+  }));
 
 // Express Configuration
 app.set('view engine', 'ejs');
@@ -36,27 +29,30 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-}));
+// Routes
+const indexRouter = require('./routes/indexRouter');
+const loginRouter = require('./routes/loginRouter')(pool); // Pass the database pool to loginRouter
+const registerRouter = require('./routes/registerRouter')(pool); // Pass the database pool to registerRouter
+const requestsHistoryRouter = require('./routes/requestsHistoryRouter');
+const newRequestRouter = require('./routes/newRequestRouter');
+const editUserDetailsRouter = require('./routes/editUserDetailsRouter');
+const requestsRouter = require('./routes/requestsRouter');
+const editRequestsRouter = require('./routes/editRequestsRouter');
 
-// Use the authMiddleware for all routes
+// Use Authentication Middleware for Protected Routes
 app.use(authMiddleware);
 
-// Define routes
-
-// Login Page
-app.use(loginRouter); // Mount the loginRouter
-
-// Use the registerRouter for the /registerPage1 and /registerPage2 routes
-app.use(registerRouter);
-
-// Index Page (using indexRouter with authMiddleware)
-app.use('/indexPage', indexRouter);
+// Mount Routes
+app.use('/', indexRouter);
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
+app.use('/requestsHistory', requestsHistoryRouter);
+app.use('/newRequest', newRequestRouter);
+app.use('/editUserDetails', editUserDetailsRouter);
+app.use('/requests', requestsRouter);
+app.use('/editRequests', editRequestsRouter);
 
 // Start the Server
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running at http://localhost:${port}`);
 });

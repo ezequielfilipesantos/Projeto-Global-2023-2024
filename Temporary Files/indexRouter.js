@@ -1,9 +1,11 @@
+// routes/indexRouter.js
 const express = require('express');
 const router = express.Router();
 
-// GET route for rendering the initial page when the user is not authenticated
+// Define a route for the index page
 router.get('/', (req, res) => {
-  res.render('index');
+  // Render the indexPage.ejs view
+  res.render('indexPage');
 });
 
 module.exports = router;

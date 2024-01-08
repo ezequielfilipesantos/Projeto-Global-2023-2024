@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// GET route for rendering the initial page when the user is not authenticated
+// GET route for rendering the user details editing page for Utente (authenticated)
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('editUserDetails');
 });
 
 module.exports = router;

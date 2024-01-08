@@ -3,10 +3,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-module.exports = function (pool) {
+module.exports = function(pool) {
   // GET route for rendering the login view
   router.get('/', (req, res) => {
-    res.render('login'); // Render the login view
+    res.render('loginPage');
   });
 
   // POST route for handling login
@@ -14,7 +14,7 @@ module.exports = function (pool) {
     const { email, password } = req.body;
 
     try {
-      // Check if the user exists in the database (using bcrypt for password hashing)
+      // Check if the user exists in the database
       const result = await pool.query('SELECT * FROM utentelogin WHERE email = $1', [email]);
 
       if (result.rows.length > 0) {
@@ -29,11 +29,11 @@ module.exports = function (pool) {
           res.redirect('/indexPage');
         } else {
           // Incorrect password
-          res.render('login', { error: 'Incorrect password' });
+          res.render('loginPage', { error: 'Incorrect password' });
         }
       } else {
         // User not found
-        res.render('login', { error: 'User not found' });
+        res.render('loginPage', { error: 'User not found' });
       }
     } catch (error) {
       console.error('Error during login:', error);

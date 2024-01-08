@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// GET route for rendering the initial page when the user is not authenticated
+// GET route for rendering the requests history page for Utente (authenticated)
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('requestsHistory');
 });
 
 module.exports = router;

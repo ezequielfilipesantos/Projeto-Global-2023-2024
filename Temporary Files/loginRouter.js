@@ -3,7 +3,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-module.exports = function (pool) {
+module.exports = function(pool) {
   // GET route for rendering the login view
   router.get('/', (req, res) => {
     res.render('login'); // Render the login view
