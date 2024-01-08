@@ -27,12 +27,14 @@ app.use(session({
 // Express Configuration
 app.set('view engine', 'ejs');
 app.use(express.json());
-app.use(express.urlencoded({s extended: true }));
-app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the 'public' directory
+app.use(express.static(__dirname + '/public'));
 
 // Routes
 const indexRouter = require('./routes/indexRouter');
-const loginRouter = require('./routes/loginRouter');//(pool); // Pass the database pool to loginRouter
+const loginRouter = require('./routes/loginRouter')(pool); // Pass the database pool to loginRouter
 const registerRouter = require('./routes/registerRouter');//(pool); // Pass the database pool to registerRouter
 
 const requestsHistoryRouter = require('./routes/requestsHistoryRouter');
