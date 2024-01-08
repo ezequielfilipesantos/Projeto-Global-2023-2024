@@ -35,7 +35,7 @@ app.use(express.static(__dirname + '/public'));
 // Routes
 const indexRouter = require('./routes/indexRouter');
 const loginRouter = require('./routes/loginRouter')(pool); // Pass the database pool to loginRouter
-const registerRouter = require('./routes/registerRouter');//(pool); // Pass the database pool to registerRouter
+const registerRouter = require('./routes/registerRouter');(pool); // Pass the database pool to registerRouter
 
 const requestsHistoryRouter = require('./routes/requestsHistoryRouter');
 const newRequestRouter = require('./routes/newRequestRouter');

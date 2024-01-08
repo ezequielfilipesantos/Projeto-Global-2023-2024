@@ -1,4 +1,3 @@
-// routes/loginRouter.js
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
@@ -14,16 +13,32 @@ module.exports = function (pool) {
     const { email, password } = req.body;
 
     try {
-      // Check if the user exists in the database (using bcrypt for password hashing)
-      const result = await pool.query('SELECT * FROM utentelogin WHERE email = $1', [email]);
+      // Check if the user exists in the UtenteLogin table
+      let result = await pool.query('SELECT * FROM UtenteLogin WHERE email = $1', [email]);
+
+      let user = null;
+      let userType = '';
 
       if (result.rows.length > 0) {
-        const user = result.rows[0];
+        // Found user in UtenteLogin
+        user = result.rows[0];
+        userType = 'Utente';
+      } else {
+        // If not found, check in MédicoLogin table
+        result = await pool.query('SELECT * FROM MédicoLogin WHERE "E-Mail" = $1', [email]);
+        if (result.rows.length > 0) {
+          user = result.rows[0];
+          userType = 'Médico';
+        }
+      }
+
+      if (user) {
         const passwordMatch = await bcrypt.compare(password, user.password_hash);
 
         if (passwordMatch) {
           // Successful login
           req.session.isAuthenticated = true;
+          req.session.userType = userType; // Store the type of user
 
           // Redirect to indexPage if authentication is successful
           res.redirect('/indexPage');
