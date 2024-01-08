@@ -199,3 +199,8 @@ FOREIGN KEY (UtenteIdentificaçãoUtenteID)
 REFERENCES UtenteIdentificação (UtenteID);
 
 ALTER TABLE utentelogin ALTER COLUMN password TYPE character varying(60);
+
+
+ALTER TABLE utentelogin ALTER COLUMN password TYPE varchar(60);
+ALTER TABLE médicologin ALTER COLUMN password TYPE varchar(60);
+
