@@ -1,0 +1,13 @@
+body {
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+  }
+.navbar { background-color: #f8f8f8; padding: 10px; text-align: center; }
+.navbar a { margin: 0 10px; text-decoration: none; color: black; }
+.main-content { text-align: center; padding: 50px; }
+.main-content img { width: 200px; } /* Placeholder for the image */
+.cta-button { padding: 10px 20px; background-color: blue; color: white; text-decoration: none; }
+.footer { background-color: #004c8c; color: white; text-align: center; padding: 20px; }

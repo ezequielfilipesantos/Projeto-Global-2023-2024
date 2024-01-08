@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// GET route for rendering the initial page when the user is not authenticated
-router.get('/', (req, res) => {
+// GET route for rendering the index page
+router.get('/index', (req, res) => {
   res.render('index');
 });
 
