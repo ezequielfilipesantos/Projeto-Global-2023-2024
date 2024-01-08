@@ -8,6 +8,7 @@ const app = express();
 const port = 3000;
 
 // Database Connection
+
 const pool = new Pool({
   user: 'postgres', // Correct the database user
   host: 'localhost',
@@ -26,13 +27,14 @@ app.use(session({
 // Express Configuration
 app.set('view engine', 'ejs');
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({s extended: true }));
 app.use(express.static('public'));
 
 // Routes
 const indexRouter = require('./routes/indexRouter');
-const loginRouter = require('./routes/loginRouter')(pool); // Pass the database pool to loginRouter
-const registerRouter = require('./routes/registerRouter')(pool); // Pass the database pool to registerRouter
+const loginRouter = require('./routes/loginRouter');//(pool); // Pass the database pool to loginRouter
+const registerRouter = require('./routes/registerRouter');//(pool); // Pass the database pool to registerRouter
+
 const requestsHistoryRouter = require('./routes/requestsHistoryRouter');
 const newRequestRouter = require('./routes/newRequestRouter');
 const editUserDetailsRouter = require('./routes/editUserDetailsRouter');
@@ -46,6 +48,7 @@ app.use(authMiddleware);
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+
 app.use('/requestsHistory', requestsHistoryRouter);
 app.use('/newRequest', newRequestRouter);
 app.use('/editUserDetails', editUserDetailsRouter);
