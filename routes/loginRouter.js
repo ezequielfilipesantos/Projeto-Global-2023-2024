@@ -33,8 +33,8 @@ module.exports = function (pool) {
       }
 
       if (user) {
-        const passwordMatch = await bcrypt.compare(password, user.password_hash);
-
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        
         if (passwordMatch) {
           // Successful login
           req.session.isAuthenticated = true;

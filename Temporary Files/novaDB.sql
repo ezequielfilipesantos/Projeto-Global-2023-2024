@@ -197,3 +197,5 @@ ALTER TABLE UtenteResidência
 ADD CONSTRAINT FKUtenteResi13295 
 FOREIGN KEY (UtenteIdentificaçãoUtenteID) 
 REFERENCES UtenteIdentificação (UtenteID);
+
+ALTER TABLE utentelogin ALTER COLUMN password TYPE character varying(60);

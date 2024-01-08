@@ -8,21 +8,21 @@ const app = express();
 const port = 3000;
 
 // Database Connection
+
 const pool = new Pool({
-  user: 'postgres', // Replace with actual database user
+  user: 'postgres', // Correct the database user
   host: 'localhost',
   database: 'juntadb',
-  password: 'magali712', // Replace with actual database password
+  password: 'magali712',
   port: 5432,
 });
 
 // Session Configuration
 app.use(session({
-  secret: 'your-secret-key', // Replace with actual secret key
-  resave: false,
-  saveUninitialized: true,
-  // cookie: { secure: true } // Uncomment if using HTTPS
-}));
+    secret: 'your-secret-key',
+    resave: false, // Set to false to avoid session save on every request
+    saveUninitialized: true,
+  }));
 
 // Express Configuration
 app.set('view engine', 'ejs');
@@ -35,7 +35,7 @@ app.use(express.static(__dirname + '/public'));
 // Routes
 const indexRouter = require('./routes/indexRouter');
 const loginRouter = require('./routes/loginRouter')(pool); // Pass the database pool to loginRouter
-const registerRouter = require('./routes/registerRouter')(pool); // Correctly pass the database pool to registerRouter
+const registerRouter = require('./routes/registerRouter');(pool); // Pass the database pool to registerRouter
 
 const requestsHistoryRouter = require('./routes/requestsHistoryRouter');
 const newRequestRouter = require('./routes/newRequestRouter');
