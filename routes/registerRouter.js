@@ -10,25 +10,24 @@ module.exports = function (pool) {
 
   // POST route for handling registration
   router.post('/', async (req, res) => {
-    const { nomeutente, nif, email, password } = req.body; // Corrected to match the form field names
-
+    const { nomeutente, nif, email, password } = req.body;
+  
     try {
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 255);
-
+      //HASH
+      const hashedPassword = await bcrypt.hash(password, 12);
       // Check if the user already exists in the UtenteLogin table
       const userExistsResult = await pool.query('SELECT * FROM utentelogin WHERE email = $1', [email]);
-
+  
       if (userExistsResult.rows.length > 0) {
         res.render('public_views/user_logic/register', { error: 'User with this email already exists' });
       } else {
         // Call the database function to create a new user and get the user ID
         const newUserResult = await pool.query(
           'SELECT create_new_user_login($1, $2, $3, $4)', 
-          [nomeutente, parseInt(nif, 10), email, hashedPassword] // Parse nif as integer
+          [nomeutente, nif, email, hashedPassword] // Pass nif as VARCHAR
         );
         const newUserID = newUserResult.rows[0].create_new_user_login;
-
+  
         if (newUserID) {
           req.session.isAuthenticated = true;
           req.session.userType = 'Utente';
