@@ -3,7 +3,7 @@ const router = express.Router();
 
 // GET route for rendering the index page
 router.get('/index', (req, res) => {
-  res.render('index');
+  res.render('public_views/user_logic/index');
 });
 
 module.exports = router;

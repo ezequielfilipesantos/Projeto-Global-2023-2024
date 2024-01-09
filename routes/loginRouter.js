@@ -5,7 +5,7 @@ const router = express.Router();
 module.exports = function (pool) {
   // GET route for rendering the login view
   router.get('/', (req, res) => {
-    res.render('login'); // Render the login view
+    res.render('public_views/user_logic/login'); // Render the login view
   });
 
   // POST route for handling login
@@ -35,9 +35,10 @@ module.exports = function (pool) {
         const passwordMatch = await bcrypt.compare(password, user.password);
         console.log("Password match:", passwordMatch);//DEBUG
         if (passwordMatch) {
+
           req.session.isAuthenticated = true;
           req.session.userType = userType;
-          res.redirect('/index');
+          res.redirect('/homepageAuthenticatedUtente');
         } else {
           res.render('login', { error: 'Incorrect password' });
         }

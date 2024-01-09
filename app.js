@@ -1,24 +1,22 @@
-//app.js
 const express = require('express');
 const session = require('express-session');
 const { Pool } = require('pg');
-const authMiddleware = require('./middleware/authMiddleware');
 
 const app = express();
 const port = 3000;
 
 // Database Connection
 const pool = new Pool({
-  user: 'postgres', // Replace with actual database user
+  user: 'postgres',
   host: 'localhost',
   database: 'juntadb',
-  password: 'magali712', // Replace with actual database password
+  password: 'magali712',
   port: 5432,
 });
 
 // Session Configuration
 app.use(session({
-  secret: 'your-secret-key', // Replace with actual secret key
+  secret: 'your-secret-key',
   resave: false,
   saveUninitialized: true,
   // cookie: { secure: true } // Uncomment if using HTTPS
@@ -28,34 +26,36 @@ app.use(session({
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public')); // Serve static files
 
-// Serve static files from the 'public' directory
-app.use(express.static(__dirname + '/public'));
-
-// Routes
+// Import routes and middleware
 const indexRouter = require('./routes/indexRouter');
-const loginRouter = require('./routes/loginRouter')(pool); // Pass the database pool to loginRouter
-const registerRouter = require('./routes/registerRouter')(pool); // Correctly pass the database pool to registerRouter
+const loginRouter = require('./routes/loginRouter')(pool);
+const registerRouter = require('./routes/registerRouter')(pool);
+const authMiddleware = require('./middleware/authMiddleware');
 
-const requestsHistoryRouter = require('./routes/requestsHistoryRouter');
-const newRequestRouter = require('./routes/newRequestRouter');
-const editUserDetailsRouter = require('./routes/editUserDetailsRouter');
-const requestsRouter = require('./routes/requestsRouter');
-const editRequestsRouter = require('./routes/editRequestsRouter');
-
-// Use Authentication Middleware for Protected Routes
-app.use(authMiddleware);
-
-// Mount Routes
+// Public Routes
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 
-app.use('/requestsHistory', requestsHistoryRouter);
-app.use('/newRequest', newRequestRouter);
-app.use('/editUserDetails', editUserDetailsRouter);
-app.use('/requests', requestsRouter);
-app.use('/editRequests', editRequestsRouter);
+// Logout route
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+      return res.redirect('/'); // Or an error page
+    }
+    res.redirect('/login');
+  });
+});
+
+// Protected Routes with Authentication Middleware
+app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter'));
+app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter'));
+app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter'));
+app.use('/requests', authMiddleware, require('./routes/requestsRouter'));
+app.use('/editRequests', authMiddleware, require('./routes/editRequestsRouter'));
 
 // Start the Server
 app.listen(port, () => {

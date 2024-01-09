@@ -1,3 +1,6 @@
+Temporary Files\funções.txt
+
+@@ -1,55 +0,0 @@
 ---utente
 CREATE OR REPLACE FUNCTION create_new_user_login(nomeUtente VARCHAR(100), email VARCHAR(64), password VARCHAR(16))
 RETURNS INT AS $$
@@ -33,23 +36,3 @@ BEGIN
         UPDATE UtenteLogin SET Email = new_email WHERE UtenteIdentificaçãoUtenteID = utente_id;
     END IF;
     IF new_password IS NOT NULL THEN
-        UPDATE UtenteLogin SET Password = new_password WHERE UtenteIdentificaçãoUtenteID = utente_id;
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION alter_doctor_login(medico_id INT, new_email VARCHAR(64) DEFAULT NULL, new_password VARCHAR(16) DEFAULT NULL)
-RETURNS VOID AS $$
-BEGIN
-    IF new_email IS NOT NULL THEN
-        UPDATE MédicoLogin SET "E-Mail" = new_email WHERE MedicoMedicoID = medico_id;
-    END IF;
-    IF new_password IS NOT NULL THEN
-        UPDATE MédicoLogin SET Password = new_password WHERE MedicoMedicoID = medico_id;
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT alter_user_login(1, new_email := 'newuser@example.com', new_password := 'newpassword');
-
-SELECT alter_doctor_login(1, new_email := 'newdoctor@example.com', new_password := 'newdocpassword');

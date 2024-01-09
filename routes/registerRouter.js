@@ -5,7 +5,7 @@ const router = express.Router();
 module.exports = function (pool) {
   // GET route for rendering the registration view
   router.get('/', (req, res) => {
-    res.render('register'); // Render the registration view
+    res.render('public_views/user_logic/register'); // Render the registration view
   });
 
   // POST route for handling registration
