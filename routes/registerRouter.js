@@ -1,52 +1,38 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const router = express.Router();
 
-// Export a function that takes the pool object
-module.exports = function(pool) {
-  const router = express.Router();
-
-  // GET route for rendering the registration page
+module.exports = function (pool) {
+  // GET route for rendering the registration view
   router.get('/', (req, res) => {
-    res.render('register');
+    res.render('register'); // Render the registration view
   });
 
   // POST route for handling registration
   router.post('/', async (req, res) => {
-    const { name, email, password, userType, specialty } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    const { name, email, password } = req.body;
+    console.log("Received registration data:", req.body);
 
     try {
-      if (userType === 'Utente') {
-        // Insert into UtenteIdentificação and UtenteLogin
-        const utenteResult = await pool.query(
-          'INSERT INTO UtenteIdentificação (NomeUtente) VALUES ($1) RETURNING UtenteID', 
-          [name]
-        );
-        const utenteId = utenteResult.rows[0].utenteid;
+      // Check if the user already exists in the UtenteLogin table
+      const result = await pool.query('SELECT * FROM utentelogin WHERE email = $1', [email]);
 
-        await pool.query(
-          'INSERT INTO UtenteLogin (Email, Password, UtenteIdentificaçãoUtenteID) VALUES ($1, $2, $3)', 
-          [email, hashedPassword, utenteId]
-        );
-      } else if (userType === 'Médico') {
-        // Insert into MédicoIdentificação and MédicoLogin
-        const medicoResult = await pool.query(
-          'INSERT INTO MédicoIdentificação (NomeMedico, Especialidade) VALUES ($1, $2) RETURNING MedicoID', 
-          [name, specialty]
-        );
-        const medicoId = medicoResult.rows[0].medicoid;
+      if (result.rows.length > 0) {
+        res.render('register', { error: 'User with this email already exists' });
+      } else {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        await pool.query(
-          'INSERT INTO MédicoLogin ("E-Mail", Password, MedicoMedicoID) VALUES ($1, $2, $3)', 
-          [email, hashedPassword, medicoId]
-        );
+        // Call the database function to create a new user and get the user ID
+        const newUserID = await pool.query('SELECT create_new_user_login($1, $2, $3)', [name, email, hashedPassword]);
+
+        req.session.isAuthenticated = true;
+        req.session.userType = 'Utente';
+        res.redirect('/index');
       }
-
-      // Redirect to the login page after successful registration
-      res.redirect('/login');
     } catch (error) {
       console.error('Error during registration:', error);
-      res.status(500).render('errorPage', { error: 'Internal Server Error' });
+      res.status(500).render('errorPage', { error: 'Internal Server Error' }); // Ensure this view exists
     }
   });
 
