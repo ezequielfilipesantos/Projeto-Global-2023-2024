@@ -1,0 +1,39 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  header {
+    /* Styles for your header */
+  }
+  
+  .instructions h1 {
+    /* Styles for the main title */
+  }
+  
+  .instructions ul {
+    /* Styles for the instructions list */
+  }
+  
+  .instructions li {
+    /* Styles for each list item */
+  }
+  
+  .doctors-conversation {
+    /* Styles for the section with doctors image */
+    background-image: url('path-to-your-image.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 300px; /* or any other size */
+  }
+  
+  footer {
+    /* Styles for your footer */
+  }
+  
