@@ -39,6 +39,10 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 
+app.get('/', (req, res) => {
+  res.redirect('/index');
+});
+
 // Logout route
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
@@ -51,11 +55,15 @@ app.get('/logout', (req, res) => {
 });
 
 // Protected Routes with Authentication Middleware
-app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter'));
-app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter'));
-app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter'));
 app.use('/requests', authMiddleware, require('./routes/requestsRouter'));
 app.use('/editRequests', authMiddleware, require('./routes/editRequestsRouter'));
+
+//Protected Utente
+app.use('/homepageAutenticatedUtente', authMiddleware, require('./routes/homepageAutenticatedUtenteRouter'));
+app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter'));
+app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter'));
+app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter'));
+
 
 // Start the Server
 app.listen(port, () => {
