@@ -38,7 +38,7 @@ module.exports = function (pool) {
 
           req.session.isAuthenticated = true;
           req.session.userType = userType;
-          res.redirect('/homepageAuthenticatedUtente');
+          res.redirect('homepageAuthenticatedUtente');
         } else {
           res.render('login', { error: 'Incorrect password' });
         }
