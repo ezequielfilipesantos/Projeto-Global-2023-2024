@@ -32,6 +32,7 @@ app.use(express.static(__dirname + '/public')); // Serve static files
 const indexRouter = require('./routes/indexRouter');
 const loginRouter = require('./routes/loginRouter')(pool);
 const registerRouter = require('./routes/registerRouter')(pool);
+const editUserDetails = require('./routes/editUserDetailsRouter')(pool);
 const authMiddleware = require('./middleware/authMiddleware');
 
 // Public Routes
