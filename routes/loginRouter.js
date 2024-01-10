@@ -38,6 +38,8 @@ module.exports = function (pool) {
 
           req.session.isAuthenticated = true;
           req.session.userType = userType;
+          req.session.userID = user.UtenteUtenteID; // Store UtenteID in session
+
           res.redirect('/homepageAutenticatedUtente'); // Update this line
         } else {
           res.render('login', { error: 'Incorrect password' });

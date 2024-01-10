@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User Details</title>
+  <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="/hp.css">
+</head>
+<body>
+    <form action="/editUserDetails" method="post">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="text" name="niss" placeholder="NISS" required>
+    <input type="text" name="cc" placeholder="CC" required>
+    <input type="text" name="localidadeEmissaoDSIC" placeholder="Localidade de Emissão DSIC" required>
+    <input type="date" name="dataEmissaoDSIC" placeholder="Data de Emissão DSIC" required>
+    <input type="date" name="dataValidadeCC" placeholder="Data de Validade CC" required>
+    <input type="text" name="nif" placeholder="NIF" required>
+    <input type="date" name="dataNascimento" placeholder="Data de Nascimento" required>
+    <input type="text" name="freguesiaNaturalidade" placeholder="Freguesia de Naturalidade" required>
+    <input type="text" name="concelhoNaturalidade" placeholder="Concelho de Naturalidade" required>
+    <input type="text" name="paisNaturalidade" placeholder="País de Naturalidade" required>
+    <input type="number" name="cartaoResidencia" placeholder="Número do Cartão de Residência" required>
+    <div>
+      <label for="previamenteSubmetidoAJM">Prev. Submetido a J.M.:</label>
+      <input type="checkbox" name="previamenteSubmetidoAJM" id="previamenteSubmetidoAJM">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

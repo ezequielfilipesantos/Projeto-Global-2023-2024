@@ -1,4 +1,5 @@
-CREATE OR REPLACE FUNCTION submit_personal_info_utente(
+CREATE OR REPLACE FUNCTION update_personal_info_utente(
+    utenteID INT,
     nome VARCHAR(100), 
     niss BIGINT, 
     cc VARCHAR(12), 
@@ -12,40 +13,22 @@ CREATE OR REPLACE FUNCTION submit_personal_info_utente(
     paisNaturalidade VARCHAR(255),
     cartaoResidencia INT,
     previamenteSubmetidoAJM BOOLEAN
-) RETURNS INT AS $$
-DECLARE
-    new_utente_id INT;
+) RETURNS VOID AS $$
 BEGIN
-    INSERT INTO Utente (
-        NomeUtente, 
-        NISS, 
-        CC, 
-        LocalidadeEmissãoDSIC, 
-        DataEmissãoDSIC, 
-        DataValidadeCC, 
-        NIF, 
-        DataNascimento, 
-        FreguesiaNaturalidade, 
-        ConcelhoNaturalidade, 
-        PaisNaturalidade, 
-        CartãoResidência, 
-        UtentePréviamenteSubmetidoAJM
-    ) VALUES (
-        nome, 
-        niss, 
-        cc, 
-        localidadeEmissaoDSIC, 
-        dataEmissaoDSIC, 
-        dataValidadeCC, 
-        nif, 
-        dataNascimento, 
-        freguesiaNaturalidade, 
-        concelhoNaturalidade, 
-        paisNaturalidade, 
-        cartaoResidencia, 
-        previamenteSubmetidoAJM
-    ) RETURNING UtenteID INTO new_utente_id;
-    
-    RETURN new_utente_id;
+    UPDATE Utente
+    SET NomeUtente = nome, 
+        NISS = niss, 
+        CC = cc, 
+        LocalidadeEmissãoDSIC = localidadeEmissaoDSIC, 
+        DataEmissãoDSIC = dataEmissaoDSIC, 
+        DataValidadeCC = dataValidadeCC, 
+        NIF = nif, 
+        DataNascimento = dataNascimento, 
+        FreguesiaNaturalidade = freguesiaNaturalidade, 
+        ConcelhoNaturalidade = concelhoNaturalidade, 
+        PaisNaturalidade = paisNaturalidade, 
+        CartãoResidência = cartaoResidencia, 
+        UtentePréviamenteSubmetidoAJM = previamenteSubmetidoAJM
+    WHERE UtenteID = utenteID;
 END;
 $$ LANGUAGE plpgsql;

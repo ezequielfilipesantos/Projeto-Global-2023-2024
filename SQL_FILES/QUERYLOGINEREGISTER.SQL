@@ -1,10 +1,14 @@
-CREATE OR REPLACE FUNCTION create_new_user_login(nomeUtente VARCHAR(100), email VARCHAR(64), password VARCHAR(64))
+CREATE OR REPLACE FUNCTION create_new_user_login(nomeUtente VARCHAR(100), nif VARCHAR(9), email VARCHAR(64), password VARCHAR(64))
 RETURNS INT AS $$
 DECLARE
     new_utente_id INT;
 BEGIN
-    INSERT INTO Utente (NomeUtente) VALUES (nomeUtente) RETURNING UtenteID INTO new_utente_id;
+    -- Insert into Utente table
+    INSERT INTO Utente (NomeUtente, NIF) VALUES (nomeUtente, nif) RETURNING UtenteID INTO new_utente_id;
+
+    -- Insert into UtenteLogin table
     INSERT INTO UtenteLogin (Email, Password, UtenteIdentificaçãoUtenteID) VALUES (email, password, new_utente_id);
+
     RETURN new_utente_id;
 END;
 $$ LANGUAGE plpgsql;
