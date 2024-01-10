@@ -1,206 +1,37 @@
-@ -1,206 +0,0 @@
-CREATE TABLE UtenteIdentificação (
-    UtenteID SERIAL NOT NULL, 
-    NomeUtente varchar(100), 
-    NISS int4, 
-    CC varchar(12), 
-    LocalidadeEmissãoDSIC varchar(255), 
-    DataEmissãoDSIC date, 
-    DataValidadeCC date, 
-    NIF int4, 
-    DataNascimento date, 
-    FreguesiaNaturalidade varchar(255), 
-    ConcelhoNaturalidade varchar(255), 
-    PaisNaturalidade varchar(255), 
-    PRIMARY KEY (UtenteID)
-);
-
-CREATE TABLE MédicoIdentificação (
-    MedicoID SERIAL NOT NULL, 
-    NomeMedico varchar(100), 
-    Especialidade varchar(100), 
-    PRIMARY KEY (MedicoID)
-);
-
-CREATE TABLE PedidoJunta (
-    IDOrdemEntrada SERIAL NOT NULL, 
-    dataPedido int4, 
-    localidadePedido int4, 
-    dataAgendamento date, 
-    termosECondiçõesAssinado bool, 
-    EfeitoIDEfeito int4 NOT NULL, 
-    EstadoIDEstado int4 NOT NULL, 
-    meterbit int4, 
-    UtenteIdentificaçãoUtenteID int4 NOT NULL, 
-    PedidoMédicoIDPedido int4 NOT NULL, 
-    PRIMARY KEY (IDOrdemEntrada)
-);
-
-CREATE TABLE UtenteResidência (
-    MoradaID SERIAL NOT NULL, 
-    RuaResidência varchar(100), 
-    FreguesiaResidência varchar(100), 
-    ConcelhoResidência varchar(100), 
-    CodigoPostalCP varchar(100) NOT NULL, 
-    UtenteIdentificaçãoUtenteID int4 NOT NULL, 
-    PRIMARY KEY (MoradaID)
-);
-
-CREATE TABLE UtenteResidênciaCP (
-    CP varchar(100) NOT NULL, 
-    Localidade varchar(100), 
-    PRIMARY KEY (CP)
-);
-
-CREATE TABLE UtenteContacto (
-    Telefone int4 NOT NULL, 
-    UtenteIdentificaçãoUtenteID int4 NOT NULL, 
-    PRIMARY KEY (Telefone, UtenteIdentificaçãoUtenteID)
-);
-
-CREATE TABLE MédicoLogin (
-    "E-Mail" varchar(64) NOT NULL, 
-    Password varchar(16), 
-    MedicoMedicoID int4 NOT NULL, 
-    PRIMARY KEY ("E-Mail")
-);
-
-CREATE TABLE JuntaMédicaAvaliação (
-    AvaliaçãoID SERIAL NOT NULL, 
-    dataAvaliaçãoJuntaMédica date, 
-    EstadoJuntaMédica int4, 
-    grauIncapacidade int4, 
-    PedidoJuntaIDOrdemEntrada int4 NOT NULL, 
-    JuntaMédicaJMID int4 NOT NULL, 
-    PRIMARY KEY (AvaliaçãoID)
-);
-
-CREATE TABLE PedidoJMInfomarçãoAdicional (
-    dataReavaliaçãoPedidoJM date, 
-    PedidoJuntaIDOrdemEntrada int4 NOT NULL
-);
-
-CREATE TABLE Efeito (
-    IDEfeito SERIAL NOT NULL, 
-    Descritivo varchar(255), 
-    PRIMARY KEY (IDEfeito)
-);
-
-CREATE TABLE Documentos (
-    PedidoMédicoIDPedido int4 NOT NULL, 
-    Ordem int4 NOT NULL, 
-    Documento int4, 
-    PRIMARY KEY (PedidoMédicoIDPedido, Ordem)
-);
-
-CREATE TABLE PedidoMédico (
-    IDPedido SERIAL NOT NULL, 
-    UtenteIdentificaçãoUtenteID int4 NOT NULL, 
-    Avaliação int4, 
-    RelatorioClinco varchar(255), 
-    dataPedido date, 
-    dataResposta date, 
-    MedicoMedicoID int4 NOT NULL, 
-    PRIMARY KEY (IDPedido)
-);
-
-CREATE TABLE Estado (
-    IDEstado SERIAL NOT NULL, 
-    Descritivo varchar(255), 
-    PRIMARY KEY (IDEstado)
-);
-
-CREATE TABLE UtenteLogin (
-    Email varchar(64) NOT NULL, 
-    Password varchar(16), 
-    UtenteIdentificaçãoUtenteID int4 NOT NULL, 
-    PRIMARY KEY (Email)
-);
-
-CREATE TABLE JuntaMédica (
-    JMID SERIAL NOT NULL, 
-    DataConstituição int4, 
-    MedicoMedicoID int4 NOT NULL, 
-    PRIMARY KEY (JMID)
-);
-
-ALTER TABLE UtenteResidência 
-ADD CONSTRAINT FKUtenteResi466631 
-FOREIGN KEY (CodigoPostalCP) 
-REFERENCES UtenteResidênciaCP (CP);
-
-ALTER TABLE PedidoJunta 
-ADD CONSTRAINT FKPedidoJunt560832 
-FOREIGN KEY (EfeitoIDEfeito) 
-REFERENCES Efeito (IDEfeito);
-
-ALTER TABLE PedidoJunta 
-ADD CONSTRAINT FKPedidoJunt702081 
-FOREIGN KEY (EstadoIDEstado) 
-REFERENCES Estado (IDEstado);
-
-ALTER TABLE PedidoJMInfomarçãoAdicional 
-ADD CONSTRAINT FKPedidoJMIn967373 
-FOREIGN KEY (PedidoJuntaIDOrdemEntrada) 
-REFERENCES PedidoJunta (IDOrdemEntrada);
-
-ALTER TABLE PedidoMédico 
-ADD CONSTRAINT FKPedidoMédi322491 
-FOREIGN KEY (UtenteIdentificaçãoUtenteID) 
-REFERENCES UtenteIdentificação (UtenteID);
-
-ALTER TABLE PedidoMédico 
-ADD CONSTRAINT FKPedidoMédi58622 
-FOREIGN KEY (MedicoMedicoID) 
-REFERENCES MédicoIdentificação (MedicoID);
-
-ALTER TABLE Documentos 
-ADD CONSTRAINT FKDocumentos878668 
-FOREIGN KEY (PedidoMédicoIDPedido) 
-REFERENCES PedidoMédico (IDPedido);
-
-ALTER TABLE PedidoJunta 
-ADD CONSTRAINT FKPedidoJunt847568 
-FOREIGN KEY (PedidoMédicoIDPedido) 
-REFERENCES PedidoMédico (IDPedido);
-
-ALTER TABLE JuntaMédicaAvaliação 
-ADD CONSTRAINT FKJuntaMédic903108 
-FOREIGN KEY (PedidoJuntaIDOrdemEntrada) 
-REFERENCES PedidoJunta (IDOrdemEntrada);
-
-ALTER TABLE UtenteContacto 
-ADD CONSTRAINT FKUtenteCont987603 
-FOREIGN KEY (UtenteIdentificaçãoUtenteID) 
-REFERENCES UtenteIdentificação (UtenteID);
-
-ALTER TABLE UtenteLogin 
-ADD CONSTRAINT FKUtenteLogi267059 
-FOREIGN KEY (UtenteIdentificaçãoUtenteID) 
-REFERENCES UtenteIdentificação (UtenteID);
-
-ALTER TABLE MédicoLogin 
-ADD CONSTRAINT FKMédicoLogi964248 
-FOREIGN KEY (MedicoMedicoID) 
-REFERENCES MédicoIdentificação (MedicoID);
-
-ALTER TABLE JuntaMédica 
-ADD CONSTRAINT FKJuntaMédic219417 
-FOREIGN KEY (MedicoMedicoID) 
-REFERENCES MédicoIdentificação (MedicoID);
-
-ALTER TABLE JuntaMédicaAvaliação 
-ADD CONSTRAINT FKJuntaMédic976457 
-FOREIGN KEY (JuntaMédicaJMID) 
-REFERENCES JuntaMédica (JMID);
-
-ALTER TABLE UtenteResidência 
-ADD CONSTRAINT FKUtenteResi13295 
-FOREIGN KEY (UtenteIdentificaçãoUtenteID) 
-REFERENCES UtenteIdentificação (UtenteID);
-
-ALTER TABLE utentelogin ALTER COLUMN password TYPE character varying(60);
-
-
-ALTER TABLE utentelogin ALTER COLUMN password TYPE varchar(60);
-ALTER TABLE médicologin ALTER COLUMN password TYPE varchar(60);
+CREATE TABLE EfeitoPedido (IDEfeito SERIAL NOT NULL, Descritivo varchar(255), PRIMARY KEY (IDEfeito));
+CREATE TABLE Estado (IDEstado SERIAL NOT NULL, Descritivo varchar(255), PRIMARY KEY (IDEstado));
+CREATE TABLE AvaliaçãoMédica (IDAvaliação SERIAL NOT NULL, DetalhesAvaliação varchar(255), dataAvaliação date, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL, PRIMARY KEY (IDAvaliação));
+CREATE TABLE Utente (UtenteID SERIAL NOT NULL, NomeUtente varchar(100), NISS int8, CC varchar(12), LocalidadeEmissãoDSIC varchar(255), DataEmissãoDSIC date, DataValidadeCC date, NIF varchar(9), DataNascimento date, FreguesiaNaturalidade varchar(255), ConcelhoNaturalidade varchar(255), PaisNaturalidade varchar(255), CartãoResidência int4, UtentePréviamenteSubmetidoAJM bool, PRIMARY KEY (UtenteID));
+CREATE TABLE Médico (MedicoID SERIAL NOT NULL, NomeMedico varchar(100), Função varchar(255), Especialidade varchar(100), PRIMARY KEY (MedicoID));
+CREATE TABLE AgregadoJuntaMédica (JMID SERIAL NOT NULL, MedicoMedicoID int4 NOT NULL, DataConstituição int4, PRIMARY KEY (JMID));
+CREATE TABLE UtenteContacto (Telefone int4 NOT NULL, UtenteIdentificaçãoUtenteID int4 NOT NULL, PRIMARY KEY (Telefone, UtenteIdentificaçãoUtenteID));
+CREATE TABLE UtenteResidênciaCP (CP varchar(100) NOT NULL, Localidade varchar(100), PRIMARY KEY (CP));
+CREATE TABLE UtenteResidência (MoradaID SERIAL NOT NULL, RuaResidência varchar(100), DistritoResidência varchar(100), FreguesiaResidência varchar(100), ConcelhoResidência varchar(100), CodigoPostalCP varchar(100) NOT NULL, UtenteIdentificaçãoUtenteID int4 NOT NULL, PRIMARY KEY (MoradaID));
+CREATE TABLE MédicoLogin ("E-Mail" varchar(64) NOT NULL, Password varchar(64), MedicoMedicoID int4 NOT NULL, PRIMARY KEY ("E-Mail"));
+CREATE TABLE PedidoJMInfomarçãoAdicional (dataReavaliaçãoPedidoJM date, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL);
+CREATE TABLE Documentos (Ordem int4 NOT NULL, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL, Documento varchar(255), PRIMARY KEY (Ordem, PedidoAvaliaçãoMédicaUtenteUtenteID));
+CREATE TABLE UtenteLogin (Email varchar(64) NOT NULL, Password varchar(64), UtenteIdentificaçãoUtenteID int4 NOT NULL, PRIMARY KEY (Email));
+CREATE TABLE Condição (CondiçãoID SERIAL NOT NULL, TotalIncapacidade int4, CapacidadeRestante int4, Desvalorização int4, AvaliaçãoMédicaIDAvaliação int4 NOT NULL, PRIMARY KEY (CondiçãoID));
+CREATE TABLE Incapacidade (NumeroIncapacidadeID SERIAL NOT NULL, CondiçãoCondiçãoID int4 NOT NULL, Capitulo int4, Número int4, Alinea int4, Coeficiente int4, NomeIncapacidade varchar(255), IncapacidadeMínima float8, IncapacidadeMáxima float8, PRIMARY KEY (NumeroIncapacidadeID));
+CREATE TABLE DiagnósticoMédico (DiagnosticoID SERIAL NOT NULL, MedicoMedicoID int4 NOT NULL, AvaliaçãoMédicaIDAvaliação int4 NOT NULL, AvaliaçãoIncapacidade int4, DataDiagnóstico date, PRIMARY KEY (DiagnosticoID));
+CREATE TABLE JuntaMédicaAvaliação (AvaliaçãoJuntaMédicaID SERIAL NOT NULL, ACES varchar(255), ARS varchar(255), ValorFinalIncapacidade float4, Decisão varchar(255), Notas varchar(255), DataDecisão date, JuntaMédicaJMID int4 NOT NULL, PRIMARY KEY (AvaliaçãoJuntaMédicaID));
+CREATE TABLE PedidoAvaliaçãoMédica (UtenteUtenteID int4 NOT NULL, dataPedido int4, LocalidadePedido int4, TeCAssinado bool, EfeitoIDEfeito int4 NOT NULL, EstadoIDEstado int4 NOT NULL, PRIMARY KEY (UtenteUtenteID));
+CREATE TABLE AgendamentoJuntaMédica (AgendamentoID SERIAL NOT NULL, JuntaMédicaAvaliaçãoAvaliaçãoJuntaMédicaID int4 NOT NULL, DataAgendamentoJuntaMédica date, TipoDeAvaliação varchar(32), PRIMARY KEY (AgendamentoID));
+ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval946019 FOREIGN KEY (EfeitoIDEfeito) REFERENCES EfeitoPedido (IDEfeito);
+ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval992581 FOREIGN KEY (EstadoIDEstado) REFERENCES Estado (IDEstado);
+ALTER TABLE AgregadoJuntaMédica ADD CONSTRAINT FKAgregadoJu901910 FOREIGN KEY (MedicoMedicoID) REFERENCES Médico (MedicoID);
+ALTER TABLE UtenteContacto ADD CONSTRAINT FKUtenteCont514312 FOREIGN KEY (UtenteIdentificaçãoUtenteID) REFERENCES Utente (UtenteID);
+ALTER TABLE UtenteResidência ADD CONSTRAINT FKUtenteResi466631 FOREIGN KEY (CodigoPostalCP) REFERENCES UtenteResidênciaCP (CP);
+ALTER TABLE MédicoLogin ADD CONSTRAINT FKMédicoLogi209529 FOREIGN KEY (MedicoMedicoID) REFERENCES Médico (MedicoID);
+ALTER TABLE PedidoJMInfomarçãoAdicional ADD CONSTRAINT FKPedidoJMIn583025 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
+ALTER TABLE Documentos ADD CONSTRAINT FKDocumentos679363 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
+ALTER TABLE UtenteLogin ADD CONSTRAINT FKUtenteLogi736733 FOREIGN KEY (UtenteIdentificaçãoUtenteID) REFERENCES Utente (UtenteID);
+ALTER TABLE UtenteResidência ADD CONSTRAINT FKUtenteResi488621 FOREIGN KEY (UtenteIdentificaçãoUtenteID) REFERENCES Utente (UtenteID);
+ALTER TABLE DiagnósticoMédico ADD CONSTRAINT FKDiagnóstic779614 FOREIGN KEY (MedicoMedicoID) REFERENCES Médico (MedicoID);
+ALTER TABLE DiagnósticoMédico ADD CONSTRAINT FKDiagnóstic392115 FOREIGN KEY (AvaliaçãoMédicaIDAvaliação) REFERENCES AvaliaçãoMédica (IDAvaliação);
+ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval601144 FOREIGN KEY (UtenteUtenteID) REFERENCES Utente (UtenteID);
+ALTER TABLE AgendamentoJuntaMédica ADD CONSTRAINT FKAgendament257599 FOREIGN KEY (JuntaMédicaAvaliaçãoAvaliaçãoJuntaMédicaID) REFERENCES JuntaMédicaAvaliação (AvaliaçãoJuntaMédicaID);
+ALTER TABLE AvaliaçãoMédica ADD CONSTRAINT FKAvaliaçãoM963314 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
+ALTER TABLE JuntaMédicaAvaliação ADD CONSTRAINT FKJuntaMédic47583 FOREIGN KEY (JuntaMédicaJMID) REFERENCES AgregadoJuntaMédica (JMID);
+ALTER TABLE Condição ADD CONSTRAINT FKCondição384816 FOREIGN KEY (AvaliaçãoMédicaIDAvaliação) REFERENCES AvaliaçãoMédica (IDAvaliação);
+ALTER TABLE Incapacidade ADD CONSTRAINT FKIncapacida861426 FOREIGN KEY (CondiçãoCondiçãoID) REFERENCES Condição (CondiçãoID);
