@@ -1,5 +1,6 @@
 module.exports = function(pool) {
   const express = require('express'); // Require express here
+  
   const router = express.Router();
 
   // GET route for rendering the user details editing page
@@ -9,7 +10,7 @@ module.exports = function(pool) {
   });
 
   // POST route for submitting personal info
-  router.post('/', async (req, res) => {
+  router.post('/editUserDetails', async (req, res) => {
     const utenteID = req.session.userID; // Get the user ID from the session
 
     // Extract data from the request body
@@ -21,8 +22,7 @@ module.exports = function(pool) {
       res.redirect('/homepageAutenticatedUtente'); // Redirect after successful update
     } catch (error) {
       console.error('Error during updating user details:', error);
-      res.status(500).send('Error occurred')
-      res.redirect('/errorPage'); // Redirect after successful update
+      res.status(500).redirect('/errorPage');
     }
   });
 
