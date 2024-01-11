@@ -62,7 +62,7 @@ app.use('/editRequests', authMiddleware, require('./routes/editRequestsRouter'))
 //Protected Utente
 app.use('/homepageAutenticatedUtente', authMiddleware, require('./routes/homepageAutenticatedUtenteRouter'));
 app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter'));
-app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter'));
+app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter')(pool));
 app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter'));
 
 
