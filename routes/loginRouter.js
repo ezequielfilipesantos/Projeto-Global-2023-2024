@@ -35,17 +35,15 @@ module.exports = function (pool) {
         const passwordMatch = await bcrypt.compare(password, user.password);
         console.log("Password match:", passwordMatch);//DEBUG
         if (passwordMatch) {
-
           req.session.isAuthenticated = true;
           req.session.userType = userType;
-          req.session.userID = user.UtenteUtenteID; // Store UtenteID in session
-
-          res.redirect('/homepageAutenticatedUtente'); // Update this line
+          req.session.userID = user.UtenteUtenteID; // Ensure this is the correct field
+          res.redirect('/homepageAutenticatedUtente');
         } else {
-          res.render('login', { error: 'Incorrect password' });
+          res.render('public_views/user_logic/login', { error: 'Incorrect password' });
         }
       } else {
-        res.render('login', { error: 'User not found' });
+        res.render('public_views/user_logic/login', { error: 'User not found' });
       } 
     } catch (error) {
       console.error('Error during login:', error);
