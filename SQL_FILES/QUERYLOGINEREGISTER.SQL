@@ -6,13 +6,12 @@ BEGIN
     -- Insert into Utente table
     INSERT INTO Utente (NomeUtente, NIF) VALUES (nomeUtente, nif) RETURNING UtenteID INTO new_utente_id;
 
-    -- Insert into UtenteLogin table
+    -- Insert into UtenteLogin table with the encrypted password from the backend
     INSERT INTO UtenteLogin (Email, Password, UtenteIdentificaçãoUtenteID) VALUES (email, password, new_utente_id);
 
     RETURN new_utente_id;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION create_new_doctor_login(nomeMedico VARCHAR(100), função VARCHAR(255), especialidade VARCHAR(100), email VARCHAR(64), password VARCHAR(64))
 RETURNS INT AS $$
@@ -21,6 +20,7 @@ DECLARE
 BEGIN
     INSERT INTO Médico (NomeMedico, Função, Especialidade) VALUES (nomeMedico, função, especialidade) RETURNING MedicoID INTO new_medico_id;
     INSERT INTO MédicoLogin ("E-Mail", Password, MedicoMedicoID) VALUES (email, password, new_medico_id);
+
     RETURN new_medico_id;
 END;
 $$ LANGUAGE plpgsql;
@@ -31,8 +31,10 @@ BEGIN
     IF new_email IS NOT NULL THEN
         UPDATE UtenteLogin SET Email = new_email WHERE UtenteIdentificaçãoUtenteID = utente_id;
     END IF;
+
     IF new_password IS NOT NULL THEN
         UPDATE UtenteLogin SET Password = new_password WHERE UtenteIdentificaçãoUtenteID = utente_id;
     END IF;
 END;
 $$ LANGUAGE plpgsql;
+
