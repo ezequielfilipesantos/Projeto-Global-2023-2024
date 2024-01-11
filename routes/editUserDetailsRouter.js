@@ -15,7 +15,7 @@ module.exports = function(pool) {
     const { nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia, previamenteSubmetidoAJM } = req.body;
   
     try {
-      await pool.query('CALL update_personal_info_utente($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', [utenteID, nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia, previamenteSubmetidoAJM]);
+      await pool.query('SELECT update_personal_info_utente($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', [utenteID, nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia, previamenteSubmetidoAJM]);
       res.redirect('/homepageAutenticatedUtente'); 
     } catch (error) {
       console.error('Error during updating user details:', error);
