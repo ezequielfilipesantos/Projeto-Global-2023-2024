@@ -28,7 +28,5 @@ BEGIN
     INSERT INTO PedidoAvaliaçãoMédica (UtenteUtenteID, dataPedido, LocalidadePedido, TeCAssinado, EfeitoIDEfeito, EstadoIDEstado)
     VALUES (p_UtenteID, p_dataPedido, p_LocalidadePedido, p_TeCAssinado, p_EfeitoIDEfeito, p_EstadoIDEstado);
     
-    -- Commit the transaction
-    COMMIT;
 END;
 $$ LANGUAGE plpgsql;

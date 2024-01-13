@@ -7,7 +7,7 @@ BEGIN
     INSERT INTO Utente (NomeUtente, NIF) VALUES (nomeUtente, nif) RETURNING UtenteID INTO new_utente_id;
 
     -- Insert into UtenteLogin table with the encrypted password from the backend
-    INSERT INTO UtenteLogin (Email, Password, UtenteIdentificaçãoUtenteID) VALUES (email, password, new_utente_id);
+    INSERT INTO UtenteLogin (Email, Password, UtenteUtenteID) VALUES (email, password, new_utente_id);
 
     RETURN new_utente_id;
 END;
@@ -29,11 +29,11 @@ CREATE OR REPLACE FUNCTION alter_user_login(utente_id INT, new_email VARCHAR(64)
 RETURNS VOID AS $$
 BEGIN
     IF new_email IS NOT NULL THEN
-        UPDATE UtenteLogin SET Email = new_email WHERE UtenteIdentificaçãoUtenteID = utente_id;
+        UPDATE UtenteLogin SET Email = new_email WHERE UtenteUtenteID = utente_id;
     END IF;
 
     IF new_password IS NOT NULL THEN
-        UPDATE UtenteLogin SET Password = new_password WHERE UtenteIdentificaçãoUtenteID = utente_id;
+        UPDATE UtenteLogin SET Password = new_password WHERE UtenteUtenteID = utente_id;
     END IF;
 END;
 $$ LANGUAGE plpgsql;

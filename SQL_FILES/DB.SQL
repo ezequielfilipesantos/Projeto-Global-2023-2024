@@ -9,7 +9,7 @@ CREATE TABLE Estado (IDEstado SERIAL NOT NULL, Descritivo varchar(255), PRIMARY 
 CREATE TABLE DiagnósticoMédico (DiagnosticoID SERIAL NOT NULL, MedicoMedicoID int4 NOT NULL, AvaliaçãoMédicaIDAvaliação int4 NOT NULL, AvaliaçãoIncapacidade int4, DataDiagnóstico date, PRIMARY KEY (DiagnosticoID));
 CREATE TABLE AvaliaçãoMédica (IDAvaliação SERIAL NOT NULL, DetalhesAvaliação varchar(255), GrauIncapacidade float4, dataAvaliação date, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL, PRIMARY KEY (IDAvaliação));
 CREATE TABLE Incapacidade (IncapacidadeID SERIAL NOT NULL, CondiçãoCondiçãoID int4 NOT NULL, Capitulo int4, Número int4, Alinea int4, NomeIncapacidade varchar(255), CoeficienteMáximo float8, CoeficienteMinimo float8, PRIMARY KEY (IncapacidadeID));
-CREATE TABLE UtenteLogin (Email varchar(64) NOT NULL, Password varchar(64), UtenteIdentificaçãoUtenteID int4 NOT NULL, PRIMARY KEY (Email));
+CREATE TABLE UtenteLogin (Email varchar(64) NOT NULL, Password varchar(64), UtenteUtenteID int4 NOT NULL, PRIMARY KEY (Email));
 CREATE TABLE Documentos (Ordem int4 NOT NULL, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL, Documento varchar(255), PRIMARY KEY (Ordem, PedidoAvaliaçãoMédicaUtenteUtenteID));
 CREATE TABLE PedidoJMInfomarçãoAdicional (dataReavaliaçãoPedidoJM date, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL);
 CREATE TABLE MédicoLogin ("E-Mail" varchar(64) NOT NULL, Password varchar(64), MedicoMedicoID int4 NOT NULL, PRIMARY KEY ("E-Mail"));
@@ -26,7 +26,7 @@ ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval992581 FOREIGN K
 ALTER TABLE DiagnósticoMédico ADD CONSTRAINT FKDiagnóstic779614 FOREIGN KEY (MedicoMedicoID) REFERENCES Médico (MedicoID);
 ALTER TABLE DiagnósticoMédico ADD CONSTRAINT FKDiagnóstic392115 FOREIGN KEY (AvaliaçãoMédicaIDAvaliação) REFERENCES AvaliaçãoMédica (IDAvaliação);
 ALTER TABLE AvaliaçãoMédica ADD CONSTRAINT FKAvaliaçãoM963314 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
-ALTER TABLE UtenteLogin ADD CONSTRAINT FKUtenteLogi736733 FOREIGN KEY (UtenteIdentificaçãoUtenteID) REFERENCES Utente (UtenteID);
+ALTER TABLE UtenteLogin ADD CONSTRAINT FKUtenteLogi736733 FOREIGN KEY (UtenteUtenteID) REFERENCES Utente (UtenteID);
 ALTER TABLE Documentos ADD CONSTRAINT FKDocumentos679363 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
 ALTER TABLE PedidoJMInfomarçãoAdicional ADD CONSTRAINT FKPedidoJMIn583025 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
 ALTER TABLE MédicoLogin ADD CONSTRAINT FKMédicoLogi209529 FOREIGN KEY (MedicoMedicoID) REFERENCES Médico (MedicoID);
@@ -38,3 +38,5 @@ ALTER TABLE Condição ADD CONSTRAINT FKCondição967531 FOREIGN KEY (Incapacida
 ALTER TABLE Médica_Junta ADD CONSTRAINT FKMédica_Jun344021 FOREIGN KEY (MédicoMedicoID) REFERENCES Médico (MedicoID);
 ALTER TABLE Médica_Junta ADD CONSTRAINT FKMédica_Jun638868 FOREIGN KEY (JuntaMédicaJMID) REFERENCES JuntaMédica (JMID);
 ALTER TABLE JuntaMédica ADD CONSTRAINT FKJuntaMédic554304 FOREIGN KEY (MédicoMedicoID) REFERENCES Médico (MedicoID);
+
+
