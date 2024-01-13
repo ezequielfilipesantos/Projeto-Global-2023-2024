@@ -1,0 +1,1 @@
+INSERT INTO estado (Descritivo) VALUES ('Em espera');
