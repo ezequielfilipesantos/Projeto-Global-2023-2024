@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ACESIPCA - New Request</title>
-  <link rel="stylesheet" href="/styles/register.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Pedido Avaliação Médica</title>
+    <link rel="stylesheet" href="/styles/hp.css">
 </head>
 <body>
-  <div class="request-container">
-    <header>
-      <!-- Add your navigation header here -->
-    </header>
+    <h1>Add Pedido Avaliação Médica</h1>
+    <form method="POST" action="/addPedidoAvaliacaoMedica">
+        <label for="utenteID">Utente ID:</label>
+        <input type="text" id="utenteID" name="utenteID" required>
 
-    <form action="/submit-request" method="post">
-      <!-- Identification Section -->
-      <section class="identification">
-        <h2>Identificação</h2>  
-        <input type="text" name="nome" placeholder="Insira o nome">
-        <input type="text" name="num_utente" placeholder="Insira o seu número de Utente">
-        <input type="text" name="cc_number" placeholder="Insira o seu número de cartão de cidadão">
-        <!-- Add the rest of the fields as per the first image -->
-      </section>
+        <label for="dataPedido">Data Pedido:</label>
+        <input type="text" id="dataPedido" name="dataPedido" required>
 
-      <!-- Additional Information Section -->
-      <section class="additional-info">
-        <h2>Justificação para Junta Médica</h2>
-        <label>
-          <input type="checkbox" name="multiuso" value="multiuso">
-          multiuso (Decreto-Lei n 202/96, de 23 de outubro)
-        </label>
-        <label>
-          <input type="checkbox" name="vehicle_import" value="vehicle_import">
-          Importação de veículo automovel e outros
-        </label>
-        <!-- Add the rest of the checkboxes as per the second image -->
-        <label>
-          <input type="checkbox" name="never_submitted" value="never_submitted">
-          Nunca foi submetido a Junta Médica de avaliação do grau de incapacidade
-        </label>
-        <label>
-          <input type="checkbox" name="previously_submitted" value="previously_submitted">
-          Já foi submetido em
-          <input type="date" name="previous_submission_date">
-        </label>
-      </section>
+        <label for="localidadePedido">Localidade Pedido:</label>
+        <input type="text" id="localidadePedido" name="localidadePedido" required>
 
-      <button type="submit">Finalizar Pedido</button>
+        <label for="teCAssinado">TeC Assinado:</label>
+        <input type="checkbox" id="teCAssinado" name="teCAssinado">
+
+        <label for="efeitoIDEfeito">Efeito ID:</label>
+        <input type="text" id="efeitoIDEfeito" name="efeitoIDEfeito" required>
+
+        <label for="estadoIDEstado">Estado ID:</label>
+        <input type="text" id="estadoIDEstado" name="estadoIDEstado" required>
+
+        <label for="ruaResidencia">Rua Residência:</label>
+        <input type="text" id="ruaResidencia" name="ruaResidencia" required>
+
+        <label for="distritoResidencia">Distrito Residência:</label>
+        <input type="text" id="distritoResidencia" name="distritoResidencia" required>
+
+        <label for="freguesiaResidencia">Freguesia Residência:</label>
+        <input type="text" id="freguesiaResidencia" name="freguesiaResidencia" required>
+
+        <label for="concelhoResidencia">Concelho Residência:</label>
+        <input type="text" id="concelhoResidencia" name="concelhoResidencia" required>
+
+        <label for="codigoPostalCP">Código Postal CP:</label>
+        <input type="text" id="codigoPostalCP" name="codigoPostalCP" required>
+
+        <label for="localidade">Localidade:</label>
+        <input type="text" id="localidade" name="localidade" required>
+
+        <button type="submit">Submit</button>
     </form>
-  </div>
 </body>
 </html>

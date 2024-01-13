@@ -1,0 +1,34 @@
+CREATE OR REPLACE FUNCTION addPedidoAvaliacaoMedica(
+    p_UtenteID int4,
+    p_dataPedido int4,
+    p_LocalidadePedido int4,
+    p_TeCAssinado bool,
+    p_EfeitoIDEfeito int4,
+    p_EstadoIDEstado int4,
+    p_RuaResidencia varchar(100),
+    p_DistritoResidencia varchar(100),
+    p_FreguesiaResidencia varchar(100),
+    p_ConcelhoResidencia varchar(100),
+    p_CodigoPostalCP varchar(100),
+    p_Localidade varchar(100)
+) RETURNS void AS $$
+DECLARE
+    morada_id int4;
+BEGIN
+    -- Insert data into UtenteResidênciaCP table
+    INSERT INTO UtenteResidênciaCP (CP, Localidade)
+    VALUES (p_CodigoPostalCP, p_Localidade);
+
+    -- Insert data into UtenteResidência table
+    INSERT INTO UtenteResidência (RuaResidência, DistritoResidência, FreguesiaResidência, ConcelhoResidência, CodigoPostalCP, UtenteIdentificaçãoUtenteID)
+    VALUES (p_RuaResidencia, p_DistritoResidencia, p_FreguesiaResidencia, p_ConcelhoResidencia, p_CodigoPostalCP, p_UtenteID)
+    RETURNING MoradaID INTO morada_id;
+
+    -- Insert data into PedidoAvaliaçãoMédica table
+    INSERT INTO PedidoAvaliaçãoMédica (UtenteUtenteID, dataPedido, LocalidadePedido, TeCAssinado, EfeitoIDEfeito, EstadoIDEstado)
+    VALUES (p_UtenteID, p_dataPedido, p_LocalidadePedido, p_TeCAssinado, p_EfeitoIDEfeito, p_EstadoIDEstado);
+    
+    -- Commit the transaction
+    COMMIT;
+END;
+$$ LANGUAGE plpgsql;
