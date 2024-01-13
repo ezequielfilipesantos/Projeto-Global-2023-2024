@@ -33,6 +33,7 @@ const indexRouter = require('./routes/indexRouter');
 const loginRouter = require('./routes/loginRouter')(pool);
 const registerRouter = require('./routes/registerRouter')(pool);
 const editUserDetails = require('./routes/editUserDetailsRouter')(pool);
+const requestsHistoryRouter = require('./routes/requestsHistoryRouter')(pool)
 const authMiddleware = require('./middleware/authMiddleware');
 
 // Public Routes
@@ -58,14 +59,14 @@ app.get('/logout', (req, res) => {
 // Protected Routes with Authentication Middleware
 app.use('/requests', authMiddleware, require('./routes/requestsRouter'));
 app.use('/editRequests', authMiddleware, require('./routes/editRequestsRouter'));
+// ...
 
-//Protected Utente
+// Protected Utente
 app.use('/homepageAutenticatedUtente', authMiddleware, require('./routes/homepageAutenticatedUtenteRouter'));
 app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter')(pool));
 app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter')(pool));
 app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter')(pool));
-app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter')/*(pool)*/);
-
+app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter')(pool));
 
 // Start the Server
 app.listen(port, () => {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Avaliação Médica History</title>
+</head>
+<body>
+    <h1>Pedido Avaliação Médica History</h1>
+
+    <% if (pedidoAvaliacaoMedicaRecords.length > 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data do Pedido</th>
+                    <th>Localidade do Pedido</th>
+                    <th>Tipo de Avaliação</th>
+                    <!-- Add more table headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <% pedidoAvaliacaoMedicaRecords.forEach(function(record) { %>
+                    <tr>
+                        <td><%= record.datapedido %></td>
+                        <td><%= record.localidadepedido %></td>
+                        <td><%= record.tipodeavaliação %></td>
+                        <!-- Add more table data columns as needed -->
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No Pedido Avaliação Médica records found for this Utente.</p>
+    <% } %>
+
+    <a href="/">Go back to homepage</a>
+</body>
+</html>
