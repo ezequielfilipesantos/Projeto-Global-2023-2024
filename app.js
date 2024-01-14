@@ -5,7 +5,6 @@ const { Pool } = require('pg');
 const app = express();
 const port = 3000;
 
-// Database Connection
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -14,12 +13,10 @@ const pool = new Pool({
   port: 5432,
 });
 
-// Session Configuration
 app.use(session({
-  secret: 'your-secret-key',
+  secret: 'segredo',
   resave: false,
   saveUninitialized: true,
-  // cookie: { secure: true } // Uncomment if using HTTPS
 }));
 
 // Express Configuration
@@ -28,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public')); // Serve static files
 
-// Import routes and middleware
+// routes / middleware
 const indexRouter = require('./routes/Public_Routes/indexRouter');
 const loginRouter = require('./routes/Public_Routes/loginRouter')(pool);
 const registerRouter = require('./routes/Public_Routes/registerRouter')(pool);

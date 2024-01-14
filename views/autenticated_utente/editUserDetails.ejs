@@ -11,17 +11,14 @@
   <header>
     <nav>
       <div class="logo">
-        <!-- Assuming you have a logo here -->
         <a href="/index">ACESIPCA</a>
       </div>
       <div class="nav-links">
-        <!-- Navigation links -->
         <a href="/newRequest">Realizar Pedido de Acesso</a>
         <a href="/editUserDetails">Editar dados Utente</a>
         <a href="/requestsHistory">Historico de Pedidos</a>
       </div>
       <div class="user-info">
-        <!-- User information and logout -->
         <span>Bem-Vindo, <%= userName %></span>
         <a href="/logout">Terminar-Sessao</a>
       </div>
@@ -42,11 +39,12 @@
     <input type="text" name="paisNaturalidade" placeholder="País de Naturalidade" required>
     <input type="number" name="cartaoResidencia" placeholder="Número do Cartão de Residência" required>
     <input type="hidden" name="previamenteSubmetidoAJM" value="false">
+    
     <div>
       <label for="previamenteSubmetidoAJM">Prev. Submetido a J.M.:</label>
       <input type="checkbox" name="previamenteSubmetidoAJM" id="previamenteSubmetidoAJM" value="true">
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit">Submeter</button>
   </form>
   </form>
   <footer>

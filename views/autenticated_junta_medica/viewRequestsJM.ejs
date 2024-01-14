@@ -11,17 +11,14 @@
     <header>
         <nav>
           <div class="logo">
-            <!-- Assuming you have a logo here -->
             <a href="/index">ACESIPCA</a>
           </div>
           <div class="nav-links">
-            <!-- Navigation links -->
             <a href="/viewRequestsJM">Ver Pedidos</a>
             <a href="/OutraOpção">Outra Opção
             </a>
           </div>
           <div class="user-info">
-            <!-- User information and logout -->
             <a href="/logout">Terminar-Sessao</a>
           </div>
         </nav>
@@ -36,7 +33,6 @@
                     <th>Data do Pedido</th>
                     <th>Localidade do Pedido</th>
                     <th>Tipo de Avaliação</th>
-                    <!-- Add more table headers as needed -->
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +41,6 @@
                         <td><%= record.datapedido %></td>
                         <td><%= record.localidadepedido %></td>
                         <td><%= record.tipodeavaliação %></td>
-                        <!-- Add more table data columns as needed -->
                     </tr>
                 <% }); %>
             </tbody>

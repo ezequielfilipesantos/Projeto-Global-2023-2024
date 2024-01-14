@@ -13,16 +13,24 @@ module.exports = function(pool) {
   // POST route for submitting personal info
   router.post('/', async (req, res) => {  // This will handle form submissions to "/editUserDetails"
     const utenteID = req.session.userID; 
-
-    const { nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia, previamenteSubmetidoAJM } = req.body;
+  const { nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia } = req.body;
   
+  // Handle the 'previamenteSubmetidoAJM' field
+  let previamenteSubmetidoAJM = req.body.previamenteSubmetidoAJM;
+  if (Array.isArray(previamenteSubmetidoAJM)) {
+    previamenteSubmetidoAJM = previamenteSubmetidoAJM.includes("true");
+  } else {
+    previamenteSubmetidoAJM = previamenteSubmetidoAJM === "true";
+  }
     try {
-      await pool.query('SELECT update_personal_info_utente($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', [utenteID, nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia, previamenteSubmetidoAJM]);
-      res.redirect('/homepageAutenticatedUtente'); 
-    } catch (error) {
-      console.error('Error during updating user details:', error);
-      res.status(500).redirect('/errorPage');
-    }
+      const updateQuery = 'UPDATE utente SET nomeutente = $2, niss = $3, cc = $4, localidadeemissãodsic = $5, dataemissãodsic = $6, datavalidadecc = $7, nif = $8, datanascimento = $9, freguesianaturalidade = $10, concelhonaturalidade = $11, paisnaturalidade = $12, cartãoresidência = $13, utentepréviamentesubmetidoajm = $14 WHERE utenteid = $1';
+    await pool.query(updateQuery, [utenteID, nome, niss, cc, localidadeEmissaoDSIC, dataEmissaoDSIC, dataValidadeCC, nif, dataNascimento, freguesiaNaturalidade, concelhoNaturalidade, paisNaturalidade, cartaoResidencia, previamenteSubmetidoAJM]);
+    
+    res.redirect('/homepageAutenticatedUtente'); 
+  } catch (error) {
+    console.error('Error during updating user details:', error);
+    res.status(500).redirect('/errorPage');
+  }
   });
 
   return router;

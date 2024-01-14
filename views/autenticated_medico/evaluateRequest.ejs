@@ -4,18 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluate Request</title>
+    <title>Avaliação</title>
 </head>
 <body>
-    <h1>Evaluate Request</h1>
+    <h1>Avaliar Pedido</h1>
     <p>Request ID: <%= pedidoId %></p>
-    <!-- Add form elements to input evaluation details -->
     <form action="/evaluate/<%= pedidoId %>" method="post">
-        <!-- Add input fields for evaluation details -->
-        <label for="evaluationDetails">Evaluation Details:</label>
+        <label for="evaluationDetails">Detalhes Avaliação:</label>
         <textarea id="evaluationDetails" name="evaluationDetails" rows="4" cols="50"></textarea>
         <br>
-        <button type="submit">Submit Evaluation</button>
+        <button type="submit">Submeter Avaliação</button>
     </form>
 </body>
 </html>

@@ -11,24 +11,21 @@
     <header>
         <nav>
           <div class="logo">
-            <!-- Assuming you have a logo here -->
             <a href="/index">ACESIPCA</a>
           </div>
           <div class="nav-links">
-            <!-- Navigation links -->
             <a href="/newRequest">Realizar Pedido de Acesso</a>
             <a href="/editUserDetails">Editar dados Utente</a>
             <a href="/requestsHistory">Historico de Pedidos</a>
           </div>
           <div class="user-info">
-            <!-- User information and logout -->
             <span>Bem-Vindo, <%= userName %></span>
             <a href="/logout">Terminar-Sessao</a>
           </div>
         </nav>
       </header>
 
-    <h1>Pedido Avaliação Médica History</h1>
+    <h1>Histórico Pedido Avaliação Médica</h1>
 
     <% if (pedidoAvaliacaoMedicaRecords.length > 0) { %>
         <table>
@@ -37,7 +34,6 @@
                     <th>Data do Pedido</th>
                     <th>Localidade do Pedido</th>
                     <th>Tipo de Avaliação</th>
-                    <!-- Add more table headers as needed -->
                 </tr>
             </thead>
             <tbody>
@@ -46,16 +42,15 @@
                         <td><%= record.datapedido %></td>
                         <td><%= record.localidadepedido %></td>
                         <td><%= record.tipodeavaliação %></td>
-                        <!-- Add more table data columns as needed -->
                     </tr>
                 <% }); %>
             </tbody>
         </table>
     <% } else { %>
-        <p>No Pedido Avaliação Médica records found for this Utente.</p>
+        <p>Nenhum Pedido Encontrado!</p>
     <% } %>
 
-    <a href="/">Go back to homepage</a>
+    <a href="/">Regressar</a>
     <footer>
         <p>© 2024 ACESIPCA - Todos os direitos reservados</p>
       </footer>
