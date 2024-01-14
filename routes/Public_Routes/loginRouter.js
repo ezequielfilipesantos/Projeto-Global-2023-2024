@@ -8,13 +8,11 @@ module.exports = function (pool) {
     res.render('public_views/user_logic/login');
   });
 
-  // POST route for handling login
   router.post('/', async (req, res) => {
     const { email, password } = req.body;
     console.log("Received login request:", req.body);
 
     try {
-      // Check if the user exists in the UtenteLogin table
       let result = await pool.query('SELECT * FROM utentelogin WHERE email = $1', [email]);
       let user = null;
       let userType = '';
@@ -40,7 +38,6 @@ module.exports = function (pool) {
 
           if (userType === 'Utente') {
             req.session.userID = user.UtenteID;
-            // Fetch the user's name and store it in the session
             const query = 'SELECT nomeUtente FROM utente WHERE UtenteID = $1';
             const { rows } = await pool.query(query, [user.UtenteID]);
 
@@ -51,7 +48,6 @@ module.exports = function (pool) {
             res.redirect('/homepageAutenticatedUtente');
           } else if (userType === 'Médico') {
             req.session.userID = user.MedicoMedicoID;
-            // Fetch the médico's name and store it in the session
             const query = 'SELECT NomeMedico FROM Médico WHERE MedicoID = $1';
             const { rows } = await pool.query(query, [user.MedicoMedicoID]);
 
@@ -59,7 +55,7 @@ module.exports = function (pool) {
               req.session.userName = rows[0].NomeMedico;
             }
 
-            res.redirect('/homepageAutenticatedMedico'); // Fixed redirect path
+            res.redirect('/homepageAutenticatedMedico'); 
           }
         } else {
           res.render('public_views/user_logic/login', { error: 'Incorrect password' });
@@ -69,7 +65,7 @@ module.exports = function (pool) {
       }
     } catch (error) {
       console.error('Error during login:', error);
-      res.status(500).render('errorPage', { error: 'Internal Server Error' }); // Ensure this view exists
+      res.status(500).render('errorPage', { error: 'Internal Server Error' }); 
     }
   });
 

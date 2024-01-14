@@ -2,7 +2,6 @@ module.exports = function(pool) {
     const express = require('express');
     const router = express.Router();
 
-    // Define a route for displaying Pedido Avaliação Médica history
     router.get('/', async (req, res) => {
         try {
             const queryText = `
@@ -26,13 +25,11 @@ module.exports = function(pool) {
         }
     });
 
-    // Define a route for evaluating a Pedido
     router.get('/evaluate/:pedidoId', (req, res) => {
         const pedidoId = req.params.pedidoId;
         res.render('autenticated_medico/evaluateRequest', { pedidoId });
     });
 
-    // Define a route for creating DiagnosticoMédico
     router.get('/createDiagnostico/:pedidoId', (req, res) => {
         const pedidoId = req.params.pedidoId;
         res.render('autenticated_medico/createDiagnostico', { pedidoId });

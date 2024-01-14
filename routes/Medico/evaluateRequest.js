@@ -5,7 +5,6 @@ module.exports = function(pool) {
 
     router.get('/:pedidoId', (req, res) => {
         const pedidoId = req.params.pedidoId;
-        // Replace 'evaluatePage' with your actual EJS template filename
         res.render('autenticated_medico/evaluatePage', { pedidoId: pedidoId });
     });
 
