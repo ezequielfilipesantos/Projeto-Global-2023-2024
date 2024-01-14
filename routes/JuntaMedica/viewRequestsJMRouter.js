@@ -23,7 +23,7 @@ module.exports = function(pool) {
             `;
 
             const { rows } = await pool.query(queryText, [utenteID]);
-            res.render('autenticated_utente/requestsHistory', { pedidoAvaliacaoMedicaRecords: rows, userName: req.session.userName });
+            res.render('autenticated_junta_medica/viewRequestsJM', { pedidoAvaliacaoMedicaRecords: rows, userName: req.session.userName });
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');

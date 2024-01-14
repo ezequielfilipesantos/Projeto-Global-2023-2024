@@ -1,4 +1,4 @@
-//editUserDetailsRouter.js
+// loginRouter.js
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
@@ -32,21 +32,35 @@ module.exports = function (pool) {
 
       if (user) {
         const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log("Password match:", passwordMatch); //DEBUG
+        console.log("Password match:", passwordMatch); // DEBUG
+
         if (passwordMatch) {
           req.session.isAuthenticated = true;
           req.session.userType = userType;
-          req.session.userID = user.UtenteID;
 
-          // Fetch the user's name and store it in the session
-          const query = 'SELECT nomeUtente FROM utente WHERE UtenteID = $1';
-          const { rows } = await pool.query(query, [user.UtenteID]);
+          if (userType === 'Utente') {
+            req.session.userID = user.UtenteID;
+            // Fetch the user's name and store it in the session
+            const query = 'SELECT nomeUtente FROM utente WHERE UtenteID = $1';
+            const { rows } = await pool.query(query, [user.UtenteID]);
 
-          if (rows.length > 0) {
-            req.session.userName = rows[0].nomeUtente;
+            if (rows.length > 0) {
+              req.session.userName = rows[0].nomeUtente;
+            }
+
+            res.redirect('/homepageAutenticatedUtente');
+          } else if (userType === 'Médico') {
+            req.session.userID = user.MedicoMedicoID;
+            // Fetch the médico's name and store it in the session
+            const query = 'SELECT NomeMedico FROM Médico WHERE MedicoID = $1';
+            const { rows } = await pool.query(query, [user.MedicoMedicoID]);
+
+            if (rows.length > 0) {
+              req.session.userName = rows[0].NomeMedico;
+            }
+
+            res.redirect('/homepageAutenticatedMedico'); // Fixed redirect path
           }
-
-          res.redirect('/homepageAutenticatedUtente');
         } else {
           res.render('public_views/user_logic/login', { error: 'Incorrect password' });
         }

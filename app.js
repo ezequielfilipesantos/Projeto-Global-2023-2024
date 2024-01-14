@@ -29,12 +29,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public')); // Serve static files
 
 // Import routes and middleware
-const indexRouter = require('./routes/indexRouter');
-const loginRouter = require('./routes/loginRouter')(pool);
-const registerRouter = require('./routes/registerRouter')(pool);
-const editUserDetails = require('./routes/editUserDetailsRouter')(pool);
-const requestsHistoryRouter = require('./routes/requestsHistoryRouter')(pool)
+const indexRouter = require('./routes/Public_Routes/indexRouter');
+const loginRouter = require('./routes/Public_Routes/loginRouter')(pool);
+const registerRouter = require('./routes/Public_Routes/registerRouter')(pool);
+const editUserDetails = require('./routes/Utente/editUserDetailsRouter')(pool);
+const requestsHistoryRouter = require('./routes/Utente/requestsHistoryRouter')(pool);
 const authMiddleware = require('./middleware/authMiddleware');
+//Medico
+const homepageAutenticatedMedicoRouter = require('./routes/Medico/homepageAutenticatedMedicoRouter');/*(pool);*/
+const viewRequestsMRouter = require('./routes/Medico/viewRequestsMRouter');/*(pool);*/
+
+//JuntaMedica
+const homepageAutenticatedJMRouter = require('./routes/JuntaMedica/homepageAutenticatedJMRouter');/*(pool);*/
+//const viewRequestsJMRouter = require('./routes/JuntaMedica/viewRequestsJMRouter');/*(pool);*/
 
 // Public Routes
 app.use('/', indexRouter);
@@ -56,17 +63,21 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// Protected Routes with Authentication Middleware
-app.use('/requests', authMiddleware, require('./routes/requestsRouter'));
-app.use('/editRequests', authMiddleware, require('./routes/editRequestsRouter'));
-// ...
-
 // Protected Utente
-app.use('/homepageAutenticatedUtente', authMiddleware, require('./routes/homepageAutenticatedUtenteRouter'));
-app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter')(pool));
-app.use('/editUserDetails', authMiddleware, require('./routes/editUserDetailsRouter')(pool));
-app.use('/newRequest', authMiddleware, require('./routes/newRequestRouter')(pool));
-app.use('/requestsHistory', authMiddleware, require('./routes/requestsHistoryRouter')(pool));
+app.use('/homepageAutenticatedUtente', authMiddleware, require('./routes/Utente/homepageAutenticatedUtenteRouter'));
+app.use('/newRequest', authMiddleware, require('./routes/Utente/newRequestRouter')(pool));
+app.use('/editUserDetails', authMiddleware, require('./routes/Utente/editUserDetailsRouter')(pool));
+//app.use('/newRequest', authMiddleware, require('./routes/Utente/newRequestRouter')(pool));
+app.use('/requestsHistory', authMiddleware, require('./routes/Utente/requestsHistoryRouter')(pool));
+
+// Protected Médico
+app.use('/homepageAutenticatedMedico', authMiddleware, require('./routes/Medico/homepageAutenticatedMedicoRouter'));
+app.use('/viewRequestsM', authMiddleware, require('./routes/Medico/viewRequestsMRouter'));
+
+
+//Protected JuntaMédica
+app.use('/homepageAutenticatedJM', authMiddleware, require('./routes/JuntaMedica/homepageAutenticatedJMRouter'));
+app.use('/viewRequestsJM', authMiddleware, require('./routes/JuntaMedica/viewRequestsJMRouter'))
 
 // Start the Server
 app.listen(port, () => {

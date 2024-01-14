@@ -12,4 +12,4 @@ async function hashPassword(password) {
 }
 
 // Replace 'yourpassword' with the actual password you want to hash
-hashPassword('password2024');
+hashPassword('password');
