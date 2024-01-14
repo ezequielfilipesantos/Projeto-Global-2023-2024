@@ -1,9 +1,5 @@
-//requestsHistoryRouter.js
-const express = require('express');
-const router = express.Router();
-
-// Export a function that takes the pool object as an argument
 module.exports = function(pool) {
+    const express = require('express');
     const router = express.Router();
 
     // Define a route for displaying Pedido Avaliação Médica history
@@ -21,8 +17,8 @@ module.exports = function(pool) {
             LEFT JOIN Documentos d ON pm.UtenteUtenteID = d.PedidoAvaliaçãoMédicaUtenteUtenteID
             WHERE pm.PedidoEnviadoParaJuntaMédica = FALSE;
             `;
-    
-            const { rows } = await pool.query(queryText); // No need for parameters here
+
+            const { rows } = await pool.query(queryText);
             res.render('autenticated_medico/viewRequestsM', { pedidoAvaliacaoMedicaRecords: rows, userName: req.session.userName });
         } catch (error) {
             console.error(error);
@@ -30,16 +26,15 @@ module.exports = function(pool) {
         }
     });
 
-    // Define routes for evaluating and creating DiagnosticoMédico
+    // Define a route for evaluating a Pedido
     router.get('/evaluate/:pedidoId', (req, res) => {
         const pedidoId = req.params.pedidoId;
-        // Render a page to evaluate the request with pedidoId
         res.render('autenticated_medico/evaluateRequest', { pedidoId });
     });
 
+    // Define a route for creating DiagnosticoMédico
     router.get('/createDiagnostico/:pedidoId', (req, res) => {
         const pedidoId = req.params.pedidoId;
-        // Render a page to create DiagnosticoMédico for the request with pedidoId
         res.render('autenticated_medico/createDiagnostico', { pedidoId });
     });
 

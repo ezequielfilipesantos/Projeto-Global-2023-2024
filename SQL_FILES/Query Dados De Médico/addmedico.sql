@@ -12,7 +12,6 @@ VALUES
   ('pontesadneiza@ACESIPCA.com', 'password', 3), -- Assuming Dr. Pedro Almeida has MedicoID 2
   ('santosezequiel@ACESIPCA.com', 'password', 2); -- Assuming Dra. Sofia Santos has MedicoID 3
 
-SELECT *FROM MédicoLogin;
 
 -- Update passwords for the médicos in MédicoLogin table
 UPDATE MédicoLogin
