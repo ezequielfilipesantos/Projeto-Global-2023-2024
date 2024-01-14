@@ -41,5 +41,6 @@ ALTER TABLE JuntaMédica ADD CONSTRAINT FKJuntaMédic554304 FOREIGN KEY (Médico
 -----ADICIONADO----
 ALTER TABLE PedidoAvaliaçãoMédica
 ADD COLUMN PedidoEnviadoParaJuntaMédica BOOLEAN;
-
-
+--------Documentos .PDF ou outros!
+ALTER TABLE Documentos
+ALTER COLUMN Documento TYPE bytea;

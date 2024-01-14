@@ -37,7 +37,7 @@ const requestsHistoryRouter = require('./routes/Utente/requestsHistoryRouter')(p
 const authMiddleware = require('./middleware/authMiddleware');
 //Medico
 const homepageAutenticatedMedicoRouter = require('./routes/Medico/homepageAutenticatedMedicoRouter');/*(pool);*/
-const viewRequestsMRouter = require('./routes/Medico/viewRequestsMRouter');/*(pool);*/
+const viewRequestsMRouter = require('./routes/Medico/viewRequestsMRouter');(pool);
 
 //JuntaMedica
 const homepageAutenticatedJMRouter = require('./routes/JuntaMedica/homepageAutenticatedJMRouter');/*(pool);*/
@@ -72,12 +72,12 @@ app.use('/requestsHistory', authMiddleware, require('./routes/Utente/requestsHis
 
 // Protected Médico
 app.use('/homepageAutenticatedMedico', authMiddleware, require('./routes/Medico/homepageAutenticatedMedicoRouter'));
-app.use('/viewRequestsM', authMiddleware, require('./routes/Medico/viewRequestsMRouter'));
+app.use('/viewRequestsM', authMiddleware, require('./routes/Medico/viewRequestsMRouter')(pool));
 
 
 //Protected JuntaMédica
 app.use('/homepageAutenticatedJM', authMiddleware, require('./routes/JuntaMedica/homepageAutenticatedJMRouter'));
-app.use('/viewRequestsJM', authMiddleware, require('./routes/JuntaMedica/viewRequestsJMRouter'))
+app.use('/viewRequestsJM', authMiddleware, require('./routes/JuntaMedica/viewRequestsJMRouter')(pool));
 
 // Start the Server
 app.listen(port, () => {
