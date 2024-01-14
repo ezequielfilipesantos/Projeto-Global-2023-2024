@@ -10,13 +10,19 @@ module.exports = function(pool) {
     router.get('/', async (req, res) => {
         try {
             const queryText = `
-                SELECT *
-                FROM PedidoAvaliaçãoMédica
-                WHERE PedidoEnviadoParaJuntaMédica = FALSE
-                ORDER BY datapedido ASC; -- Order by datapedido in ascending order
+            SELECT 
+                pm.*,
+                u.NomeUtente,
+                u.NISS,
+                u.CC,
+                d.Documento
+            FROM PedidoAvaliaçãoMédica pm
+            JOIN Utente u ON pm.UtenteUtenteID = u.UtenteID
+            LEFT JOIN Documentos d ON pm.UtenteUtenteID = d.PedidoAvaliaçãoMédicaUtenteUtenteID
+            WHERE pm.PedidoEnviadoParaJuntaMédica = FALSE;
             `;
-
-            const { rows } = await pool.query(queryText);
+    
+            const { rows } = await pool.query(queryText); // No need for parameters here
             res.render('autenticated_medico/viewRequestsM', { pedidoAvaliacaoMedicaRecords: rows, userName: req.session.userName });
         } catch (error) {
             console.error(error);
@@ -24,6 +30,18 @@ module.exports = function(pool) {
         }
     });
 
+    // Define routes for evaluating and creating DiagnosticoMédico
+    router.get('/evaluate/:pedidoId', (req, res) => {
+        const pedidoId = req.params.pedidoId;
+        // Render a page to evaluate the request with pedidoId
+        res.render('autenticated_medico/evaluateRequest', { pedidoId });
+    });
+
+    router.get('/createDiagnostico/:pedidoId', (req, res) => {
+        const pedidoId = req.params.pedidoId;
+        // Render a page to create DiagnosticoMédico for the request with pedidoId
+        res.render('autenticated_medico/createDiagnostico', { pedidoId });
+    });
+
     return router;
 };
-

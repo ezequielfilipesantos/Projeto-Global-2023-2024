@@ -3,52 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Pedidos de Avaliação Médica </title>
+    <title>Ver Pedidos de Avaliação Médica</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <link rel="stylesheet" href="/styles/utente.css">
 </head>
 <body>
     <header>
         <nav>
-          <div class="logo">
-            <!-- Assuming you have a logo here -->
-            <a href="/index">ACESIPCA</a>
-          </div>
-          <div class="nav-links">
-            <!-- Navigation links -->
-            <a href="/viewRequestsM">Ver Pedidos</a>
-            <a href="/OutraOpção">Outra Opção
-            </a>
-          </div>
-          <div class="user-info">
-            <!-- User information and logout -->
-            <a href="/logout">Terminar-Sessao</a>
-          </div>
+            <div class="logo">
+                <!-- Assuming you have a logo here -->
+                <a href="/index">ACESIPCA</a>
+            </div>
+            <div class="nav-links">
+                <!-- Navigation links -->
+                <a href="/viewRequestsM">Ver Pedidos</a>
+                <a href="/OutraOpção">Outra Opção</a>
+            </div>
+            <div class="user-info">
+                <!-- User information and logout -->
+                <a href="/logout">Terminar-Sessao</a>
+            </div>
         </nav>
-      </header>
+    </header>
 
-    <h1>Pedido Avaliação Médica History</h1>
-
-    <% if (pedidoAvaliacaoMedicaRecords.length > 0) { %>
+    <% if (pedidoAvaliacaoMedicaRecords && pedidoAvaliacaoMedicaRecords.length > 0) { %>
+        <h1>Pedido Avaliação Médica History</h1>
         <table>
-            <thead>
+            <tr>
+                <th>Data Pedido</th>
+                <th>Nome Utente</th>
+                <th>NISS</th>
+                <th>CC</th>
+                <th>Documento</th>
+                <th>Action</th>
+            </tr>
+            <% for (let i = 0; i < pedidoAvaliacaoMedicaRecords.length; i++) { %>
                 <tr>
-                    <th>Data do Pedido</th>
-                    <th>Localidade do Pedido</th>
-                    <th>Tipo de Avaliação</th>
-                    <!-- Add more table headers as needed -->
+                    <td><%= pedidoAvaliacaoMedicaRecords[i].datapedido %></td>
+                    <td><%= pedidoAvaliacaoMedicaRecords[i].nomeutente %></td>
+                    <td><%= pedidoAvaliacaoMedicaRecords[i].niss %></td>
+                    <td><%= pedidoAvaliacaoMedicaRecords[i].cc %></td>
+                    <td><%= pedidoAvaliacaoMedicaRecords[i].documento %></td>
+                    <td>
+                        <a href="/evaluate/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Evaluate</a> |
+                        <a href="/createDiagnostico/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Create DiagnosticoMédico</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <% pedidoAvaliacaoMedicaRecords.forEach(function(record) { %>
-                    <tr>
-                        <td><%= record.datapedido %></td>
-                        <td><%= record.localidadepedido %></td>
-                        <td><%= record.tipodeavaliação %></td>
-                        <!-- Add more table data columns as needed -->
-                    </tr>
-                <% }); %>
-            </tbody>
+            <% } %>
         </table>
     <% } else { %>
         <p>No Pedido Avaliação Médica records found for this Utente.</p>
@@ -57,6 +58,6 @@
     <a href="/">Go back to homepage</a>
     <footer>
         <p>© 2024 ACESIPCA - Todos os direitos reservados</p>
-      </footer>
+    </footer>
 </body>
 </html>

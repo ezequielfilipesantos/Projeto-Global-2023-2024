@@ -1,0 +1,21 @@
+<!-- createDiagnostico.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create DiagnosticoMédico</title>
+</head>
+<body>
+    <h1>Create DiagnosticoMédico</h1>
+    <p>Request ID: <%= pedidoId %></p>
+    <!-- Add form elements to input DiagnosticoMédico details -->
+    <form action="/createDiagnostico/<%= pedidoId %>" method="post">
+        <!-- Add input fields for DiagnosticoMédico details -->
+        <label for="diagnosticoDetails">DiagnosticoMédico Details:</label>
+        <textarea id="diagnosticoDetails" name="diagnosticoDetails" rows="4" cols="50"></textarea>
+        <br>
+        <button type="submit">Create DiagnosticoMédico</button>
+    </form>
+</body>
+</html>
