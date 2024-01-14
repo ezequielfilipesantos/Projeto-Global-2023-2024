@@ -1,11 +1,12 @@
+//newRequestRouter.js
 const express = require('express');
 const router = express.Router();
 
 module.exports = function (pool) {
   // Route for rendering the newRequest view
   router.get('/', (req, res) => {
-    res.render('autenticated_utente/newRequest');
-  });
+    res.render('autenticated_utente/newRequest', { userName: req.session.userName });
+    });
 
   // Route for adding data
   router.post('/', async (req, res) => {

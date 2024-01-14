@@ -1,3 +1,4 @@
+//editUserDetailsRouter.js
 module.exports = function(pool) {
   const express = require('express');  
   const router = express.Router();
@@ -5,8 +6,9 @@ module.exports = function(pool) {
   // GET route for rendering the user details editing page
   router.get('/', (req, res) => {  // This will handle "/editUserDetails" due to how it's mounted in app.js
     console.log(req.session); 
-    res.render('autenticated_utente/editUserDetails'); 
-  });
+    
+    res.render('autenticated_utente/editUserDetails', { userName: req.session.userName });
+    });
 
   // POST route for submitting personal info
   router.post('/', async (req, res) => {  // This will handle form submissions to "/editUserDetails"

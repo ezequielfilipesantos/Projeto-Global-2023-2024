@@ -2,10 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Edit User Details</title>
-  <link rel="stylesheet" href="/hp.css">
+  <title>Editar dados de utilizador </title>
+  <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/utente.css">
 </head>
+
 <body>
+  <header>
+    <nav>
+      <div class="logo">
+        <!-- Assuming you have a logo here -->
+        <a href="/index">ACESIPCA</a>
+      </div>
+      <div class="nav-links">
+        <!-- Navigation links -->
+        <a href="/newRequest">Realizar Pedido de Acesso</a>
+        <a href="/editUserDetails">Editar dados Utente</a>
+        <a href="/requestsHistory">Historico de Pedidos</a>
+      </div>
+      <div class="user-info">
+        <!-- User information and logout -->
+        <span>Bem-Vindo, <%= userName %></span>
+        <a href="/logout">Terminar-Sessao</a>
+      </div>
+    </nav>
+  </header>
+
     <form action="/editUserDetails" method="post">
     <input type="text" name="nome" placeholder="Nome" required>
     <input type="text" name="niss" placeholder="NISS" required>
@@ -27,5 +49,10 @@
     <button type="submit">Submit</button>
   </form>
   </form>
+  <footer>
+    <p>© 2024 ACESIPCA - Todos os direitos reservados</p>
+  </footer>
+
 </body>
+
 </html>

@@ -1,3 +1,4 @@
+//editUserDetailsRouter.js
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
@@ -7,31 +8,43 @@ module.exports = function (pool) {
     res.render('public_views/user_logic/login');
   });
 
+  // POST route for handling login
   router.post('/', async (req, res) => {
     const { email, password } = req.body;
     console.log("Received login request:", req.body);
 
     try {
-      // Join UtenteLogin and Utente tables to get UtenteID
-      let query = `
-        SELECT ul.Email, ul.Password, u.UtenteID 
-        FROM UtenteLogin ul
-        JOIN Utente u ON ul.UtenteUtenteID = u.UtenteID
-        WHERE ul.Email = $1
-      `;
-      let result = await pool.query(query, [email]);
+      // Check if the user exists in the UtenteLogin table
+      let result = await pool.query('SELECT * FROM utentelogin WHERE email = $1', [email]);
+      let user = null;
+      let userType = '';
 
       if (result.rows.length > 0) {
-        const user = result.rows[0];
+        user = result.rows[0];
+        userType = 'Utente';
+      } else {
+        result = await pool.query('SELECT * FROM médicologin WHERE "E-Mail" = $1', [email]);
+        if (result.rows.length > 0) {
+          user = result.rows[0];
+          userType = 'Médico';
+        }
+      }
 
+      if (user) {
         const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log("Password match:", passwordMatch);
-
+        console.log("Password match:", passwordMatch); //DEBUG
         if (passwordMatch) {
           req.session.isAuthenticated = true;
-          req.session.userType = 'Utente'; // Assuming the user is of type 'Utente'
-          req.session.userID = user.utenteid;
-          console.log("Session userID after login:", req.session.userID);
+          req.session.userType = userType;
+          req.session.userID = user.UtenteID;
+
+          // Fetch the user's name and store it in the session
+          const query = 'SELECT nomeUtente FROM utente WHERE UtenteID = $1';
+          const { rows } = await pool.query(query, [user.UtenteID]);
+
+          if (rows.length > 0) {
+            req.session.userName = rows[0].nomeUtente;
+          }
 
           res.redirect('/homepageAutenticatedUtente');
         } else {
@@ -40,10 +53,9 @@ module.exports = function (pool) {
       } else {
         res.render('public_views/user_logic/login', { error: 'User not found' });
       }
-      
     } catch (error) {
       console.error('Error during login:', error);
-      res.status(500).render('errorPage', { error: 'Internal Server Error' });
+      res.status(500).render('errorPage', { error: 'Internal Server Error' }); // Ensure this view exists
     }
   });
 

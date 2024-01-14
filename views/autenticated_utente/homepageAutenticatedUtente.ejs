@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ACESIPCA</title>
-  <link rel="stylesheet" href="/styles/hp.css">
+  <title>ACESIPCA - Página Principal </title>
+  <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/utente.css">
 </head>
 <body>
   <header>
@@ -20,7 +21,7 @@
       </div>
       <div class="user-info">
         <!-- User information and logout -->
-        <span>Bem-Vindo, Fulano</span>
+        <span>Bem-Vindo, <%= userName %></span>
         <a href="/logout">Terminar-Sessao</a>
       </div>
     </nav>
@@ -47,3 +48,7 @@
   </footer>
 </body>
 </html>
+
+
+
+
