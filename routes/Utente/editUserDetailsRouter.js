@@ -30,5 +30,14 @@ module.exports = function(pool) {
   }
   });
 
+  //IMPLEMENT HERE
+  /*p_RuaResidencia,
+  p_DistritoResidencia,
+  p_FreguesiaResidencia,
+  p_ConcelhoResidencia,
+  p_CodigoPostalCP,
+  p_Localidade,
+  */
+
   return router;
 };

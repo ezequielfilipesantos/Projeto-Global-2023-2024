@@ -19,52 +19,40 @@
             <a href="/requestsHistory">Historico de Pedidos</a>
           </div>
           <div class="user-info">
-            <span>Bem-Vindo, <%= userName %></span>
+            <span>Bem-Vindo <%= userName %></span>
             <a href="/logout">Terminar-Sessao</a>
           </div>
         </nav>
       </header>
 
     <h1>Adicionar Pedido Avaliação Médica</h1>
-    <form method="POST" action="/addPedidoAvaliacaoMedica">
-        <label for="utenteID">Utente ID:</label>
-        <input type="text" id="utenteID" name="utenteID" required>
+    <form method="POST" action="/newRequest">
+      <!-- Utente ID field removed -->
+  
+      <label>Data Pedido:</label>
+      <span id="dataPedido"><%= currentDate %></span>
 
-        <label for="dataPedido">Data Pedido:</label>
-        <input type="text" id="dataPedido" name="dataPedido" required>
-
-        <label for="localidadePedido">Localidade Pedido:</label>
-        <input type="text" id="localidadePedido" name="localidadePedido" required>
-
-        <label for="teCAssinado">TeC Assinado:</label>
-        <input type="checkbox" id="teCAssinado" name="teCAssinado">
-
-        <label for="efeitoIDEfeito">Efeito ID:</label>
-        <input type="text" id="efeitoIDEfeito" name="efeitoIDEfeito" required>
-
-        <label for="estadoIDEstado">Estado ID:</label>
-        <input type="text" id="estadoIDEstado" name="estadoIDEstado" required>
-
-        <label for="ruaResidencia">Rua Residência:</label>
-        <input type="text" id="ruaResidencia" name="ruaResidencia" required>
-
-        <label for="distritoResidencia">Distrito Residência:</label>
-        <input type="text" id="distritoResidencia" name="distritoResidencia" required>
-
-        <label for="freguesiaResidencia">Freguesia Residência:</label>
-        <input type="text" id="freguesiaResidencia" name="freguesiaResidencia" required>
-
-        <label for="concelhoResidencia">Concelho Residência:</label>
-        <input type="text" id="concelhoResidencia" name="concelhoResidencia" required>
-
-        <label for="codigoPostalCP">Código Postal CP:</label>
-        <input type="text" id="codigoPostalCP" name="codigoPostalCP" required>
-
-        <label for="localidade">Localidade:</label>
-        <input type="text" id="localidade" name="localidade" required>
-
-        <button type="submit">Submeter</button>
-    </form>
+  
+      <label for="localidadePedido">Localidade Pedido:</label>
+      <input type="text" id="localidadePedido" name="localidadePedido" required>
+     
+      <label for="efeito">Efeito:</label>
+      <select id="efeito" name="efeito" required>
+        <option value="" disabled selected>Select an option</option> <!-- Placeholder -->
+        <% efeitoOptions.forEach((efeito) => { %>
+          <option value="<%= efeito.IDEfeito %>"><%= efeito.Descritivo %></option>
+        <% }); %>
+      </select>
+      
+      
+      <label for="teCAssinado">TeC Assinado:</label>
+      <input type="checkbox" id="teCAssinado" name="teCAssinado">
+  
+      <h2>Anexo:</h2>
+      <input type="file" id="anexo" name="Anexos/Documentos/Exames">
+  
+      <button type="submit">Submeter</button>
+  </form>
     <footer>
         <p>© 2024 ACESIPCA - Todos os direitos reservados</p>
       </footer>
