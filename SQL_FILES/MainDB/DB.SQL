@@ -71,3 +71,9 @@ ALTER COLUMN dataPedido TYPE DATE USING to_date(dataPedido::TEXT, 'YYYYMMDD');
 
 ALTER TABLE PedidoAvaliaçãoMédica
 ALTER COLUMN LocalidadePedido TYPE TEXT;
+
+
+---
+CREATE TABLE DiagnósticoMédico (DiagnosticoID SERIAL NOT NULL, MedicoMedicoID int4 NOT NULL, AvaliaçãoMédicaIDAvaliação int4 NOT NULL, AvaliaçãoIncapacidade int4, DataDiagnóstico date, PRIMARY KEY (DiagnosticoID));
+ALTER TABLE DiagnósticoMédico ADD CONSTRAINT FKDiagnóstic779614 FOREIGN KEY (MedicoMedicoID) REFERENCES Médico (MedicoID);
+ALTER TABLE DiagnósticoMédico ADD CONSTRAINT FKDiagnóstic392115 FOREIGN KEY (AvaliaçãoMédicaIDAvaliação) REFERENCES AvaliaçãoMédica (IDAvaliação);

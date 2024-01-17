@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = function(pool, addUtenteInformation, updateUtenteAndResidencia) {
-  // Log that the router is connected
   console.log('New Request Router is connected!');
 
   router.get('/', (req, res) => {  
@@ -14,11 +13,9 @@ module.exports = function(pool, addUtenteInformation, updateUtenteAndResidencia)
     try {
       await pool.query('BEGIN');
 
-      // Access userEmail and userName from the session
       const userEmail = req.session.userEmail;
       const userName = req.session.userName;
 
-      // Fetch user ID using the PostgreSQL function
       const queryTextUserID = 'SELECT FindUtenteIDByEmail($1) as utenteid';
       const userIDResult = await pool.query(queryTextUserID, [userEmail]);
       const utenteID = userIDResult.rows[0].utenteid;
@@ -30,7 +27,6 @@ module.exports = function(pool, addUtenteInformation, updateUtenteAndResidencia)
         p_ConcelhoResidencia, p_CodigoPostalCP
       } = req.body;
 
-      // Format the date fields (if needed)
       const formattedDataEmissaoDSIC = formatDate(req.body.dataEmissaoDSIC);
       const formattedDataValidadeCC = formatDate(req.body.dataValidadeCC);
       const formattedDataNascimento = formatDate(req.body.dataNascimento);
@@ -40,7 +36,6 @@ module.exports = function(pool, addUtenteInformation, updateUtenteAndResidencia)
       console.log('formattedDataNascimento:', formattedDataNascimento);
       console.log('Request body:', req.body);
       
-      // Call the updateUtenteAndResidencia function with formatted dates
       await pool.query(
         'SELECT update_utente_and_residencia($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)',
         [
@@ -84,12 +79,9 @@ module.exports = function(pool, addUtenteInformation, updateUtenteAndResidencia)
 function formatDate(dateStr) {
   const parts = dateStr.split('-');
   if (parts.length === 3) {
-    // Ensure that there are three parts (day, month, year)
     const [day, month, year] = parts;
-    // Use parseInt to convert the parts to numbers
     return `${year}-${month}-${day}`;
   } else {
-    // Handle invalid date format here or return null/undefined
     console.error('Invalid date format:', dateStr);
     return null;
   }

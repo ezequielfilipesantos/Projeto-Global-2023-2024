@@ -52,8 +52,8 @@ const authMiddleware = require('./middleware/authMiddleware');
 // Medico
 const homepageAutenticatedMedicoRouter = require('./routes/Medico/homepageAutenticatedMedicoRouter');
 const viewRequestsMRouter = require('./routes/Medico/viewRequestsMRouter')(pool);
-const evaluateRequest = require('./routes/Medico/evaluateRequest')(pool);
-const createDiagnostico = require('./routes/Medico/createDiagnostico')(pool);
+const evaluateRequestRouter = require('./routes/Medico/evaluateRequestRouter')(pool);
+const createDiagnosticoRouter = require('./routes/Medico/createDiagnosticoRouter')(pool);
 
 // JuntaMedica
 const homepageAutenticatedJMRouter = require('./routes/JuntaMedica/homepageAutenticatedJMRouter');
@@ -88,14 +88,13 @@ app.use('/requestsHistory', authMiddleware, require('./routes/Utente/requestsHis
 // Protected Médico
 app.use('/homepageAutenticatedMedico', authMiddleware, homepageAutenticatedMedicoRouter);
 app.use('/viewRequestsM', authMiddleware, viewRequestsMRouter);
-app.use('/evaluateRequest', authMiddleware, evaluateRequest);
-app.use('/createDiagnostico', authMiddleware, createDiagnostico);
-
+app.use('/evaluateRequest', authMiddleware, evaluateRequestRouter);
+app.use('/createDiagnostico', authMiddleware, createDiagnosticoRouter);
+app.use('/evaluateRequest', authMiddleware, evaluateRequestRouter);
 // Protected JuntaMédica
 app.use('/homepageAutenticatedJM', authMiddleware, homepageAutenticatedJMRouter);
 // app.use('/viewRequestsJM', authMiddleware, viewRequestsJMRouter);
 
-// Start the Server
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

@@ -5,15 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Diagnostico Médico</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/utente.css">
 </head>
 <body>
-    <h1>Criar Diagnostico Médico</h1>
-    <p>Request ID: <%= pedidoId %></p>
-    <form action="/createDiagnostico/<%= pedidoId %>" method="post">
-        <label for="diagnosticoDetails">Detalhes Diagnostico Médico :</label>
-        <textarea id="diagnosticoDetails" name="diagnosticoDetails" rows="4" cols="50"></textarea>
-        <br>
-        <button type="submit">Criar Diagnostico Médico</button>
-    </form>
+    <header>
+        <nav>
+          <div class="logo">
+            <a href="/index">ACESIPCA</a>
+          </div>
+          <div class="nav-links">
+            <a href="/viewRequestsM">Ver Pedidos</a>
+            <a href="/OutraOpção">Outra Opção
+            </a>
+          </div>
+          <div class="user-info">
+            
+            <a href="/logout">Terminar-Sessao</a>
+          </div>
+        </nav>
+      </header>
+      <h1>Criar Diagnóstico Médico</h1>
+      <p>Request ID: <%= pedidoId %></p>
+      <form action="/autenticated_medico/createDiagnostico/<%= pedidoId %>" method="post">
+          <label for="diagnosticoDetails">Detalhes Diagnóstico Médico:</label>
+          <textarea id="diagnosticoDetails" name="diagnosticoDetails" rows="4" cols="50"></textarea>
+          <br>
+          <button type="submit">Criar Diagnóstico Médico</button>
+      </form>
+      <footer>
+          <p>© 2024 ACESIPCA - Todos os direitos reservados</p>
+      </footer>
 </body>
 </html>

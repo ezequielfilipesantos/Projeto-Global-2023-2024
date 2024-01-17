@@ -42,8 +42,8 @@
                     <td><%= pedidoAvaliacaoMedicaRecords[i].cc %></td>
                     <td><%= pedidoAvaliacaoMedicaRecords[i].documento %></td>
                     <td>
-                        <a href="/evaluate/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Avaliar Utente</a> |
-                        <a href="/createDiagnostico/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Criar Diagnostico Médico</a>
+                        <a href="autenticated_medico/evaluateRequest/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Avaliar Utente</a> |
+                        <a href="autenticated_medico/createDiagnostico/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Criar Diagnostico Médico</a>
                     </td>
                 </tr>
             <% } %>
