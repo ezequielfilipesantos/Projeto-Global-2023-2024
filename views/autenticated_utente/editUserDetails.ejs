@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Editar dados de utilizador </title>
+  <title>Editar dados de utilizador</title>
   <link rel="stylesheet" href="/styles/styles.css">
-    <link rel="stylesheet" href="/styles/utente.css">
+  <link rel="stylesheet" href="/styles/utente.css">
 </head>
 
 <body>
@@ -25,32 +25,65 @@
     </nav>
   </header>
 
-    <form action="/editUserDetails" method="post">
-    <input type="text" name="nome" placeholder="Nome" required>
-    <input type="text" name="niss" placeholder="NISS" required>
-    <input type="text" name="cc" placeholder="CC" required>
-    <input type="text" name="localidadeEmissaoDSIC" placeholder="Localidade de Emissão DSIC" required>
-    <input type="date" name="dataEmissaoDSIC" placeholder="Data de Emissão DSIC" required>
-    <input type="date" name="dataValidadeCC" placeholder="Data de Validade CC" required>
-    <input type="text" name="nif" placeholder="NIF" required>
-    <input type="date" name="dataNascimento" placeholder="Data de Nascimento" required>
-    <input type="text" name="freguesiaNaturalidade" placeholder="Freguesia de Naturalidade" required>
-    <input type="text" name="concelhoNaturalidade" placeholder="Concelho de Naturalidade" required>
-    <input type="text" name="paisNaturalidade" placeholder="País de Naturalidade" required>
-    <input type="number" name="cartaoResidencia" placeholder="Número do Cartão de Residência" required>
-    <input type="hidden" name="previamenteSubmetidoAJM" value="false">
-    
-    <div>
-      <label for="previamenteSubmetidoAJM">Prev. Submetido a J.M.:</label>
-      <input type="checkbox" name="previamenteSubmetidoAJM" id="previamenteSubmetidoAJM" value="true">
-    </div>
+  <form action="/editUserDetails" method="post">
+    <!-- Section 1: Dados Pessoais -->
+    <fieldset>
+      <legend>Dados Pessoais</legend>
+      <input type="text" name="nome" placeholder="Nome" required>
+      <input type="text" name="niss" placeholder="Número de Identificação da Segurança Social (NISS)" required>
+      <input type="text" name="cc" placeholder="Número de Cartão de Cidadão (CC)" required>
+      <input type="text" name="localidadeEmissaoDSIC" placeholder="Localidade de Emissão do Documento de Identificação (DSIC)" required>
+
+      <!-- Date of Emissão DSIC -->
+      <label for="dataEmissaoDSIC">Data de Emissão do Documento de Identificação (DSIC):</label>
+      <input type="date" name="dataEmissaoDSIC" id="dataEmissaoDSIC" required>
+
+      <!-- Date of Validade CC -->
+      <label for="dataValidadeCC">Data de Validade do Cartão de Cidadão (CC):</label>
+      <input type="date" name="dataValidadeCC" id="dataValidadeCC" required>
+
+      <input type="text" name="nif" placeholder="Número de Identificação Fiscal (NIF)" required>
+
+      <!-- Date of Nascimento -->
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <input type="date" name="dataNascimento" id="dataNascimento" required>
+
+      <input type="text" name="freguesiaNaturalidade" placeholder="Freguesia de Naturalidade" required>
+      <input type="text" name="concelhoNaturalidade" placeholder="Concelho de Naturalidade" required>
+      <input type="text" name="paisNaturalidade" placeholder="País de Naturalidade" required>
+    </fieldset>
+
+    <!-- Section 2: Informação de Residência (UtenteResidência and UtenteResidênciaCP) -->
+    <fieldset>
+      <legend>Informação de Residência</legend>
+
+      <!-- Residencia Information (UtenteResidência) -->
+      <input type="text" name="p_RuaResidencia" placeholder="Rua de Residência" required>
+      <input type="text" name="p_DistritoResidencia" placeholder="Distrito de Residência" required>
+      <input type="text" name="p_FreguesiaResidencia" placeholder="Freguesia de Residência" required>
+      <input type="text" name="p_ConcelhoResidencia" placeholder="Concelho de Residência" required>
+      <input type="text" name="p_CodigoPostalCP" placeholder="Código Postal/CP de Residência" required>
+
+      <!-- Residencia Information (UtenteResidênciaCP) -->
+      <input type="number" name="cartaoResidencia" placeholder="Número do Cartão de Residência" required>
+
+      <div>
+        <label for="previamenteSubmetidoAJM">Prev. Submetido a J.M.:</label>
+        <input type="checkbox" name="previamenteSubmetidoAJM" id="previamenteSubmetidoAJM" value="true" checked>
+      </div>
+    </fieldset>
+
+    <!-- Section 3: Informação de Contacto -->
+    <fieldset>
+      <legend>Informação de Contacto</legend>
+      <input type="tel" name="phoneNumber" placeholder="Número de Telefone" required>
+    </fieldset>
+
     <button type="submit">Submeter</button>
   </form>
-  </form>
+
   <footer>
     <p>© 2024 ACESIPCA - Todos os direitos reservados</p>
   </footer>
-
 </body>
-
 </html>

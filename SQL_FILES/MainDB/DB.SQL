@@ -49,6 +49,15 @@ ADD COLUMN PedidoAvaliacaoMedicaID SERIAL PRIMARY KEY;
 ALTER TABLE PedidoAvaliaçãoMédica DROP CONSTRAINT PedidoAvaliaçãoMédica_pkey;
 ALTER TABLE PedidoAvaliaçãoMédica ADD COLUMN PedidoAvaliacaoMedicaID SERIAL PRIMARY KEY;
 
+
+ALTER TABLE PedidoAvaliaçãoMédica
+DROP CONSTRAINT FKPedidoAval601144; -- Drop the existing foreign key constraint
+
+ALTER TABLE PedidoAvaliaçãoMédica
+ADD CONSTRAINT FKPedidoAval601144 FOREIGN KEY (UtenteUtenteID) REFERENCES Utente (UtenteID);
+
+ALTER TABLE UtenteResidência RENAME COLUMN UtenteIdentificaçãoUtenteID TO UtenteUtenteID;
+
 --------Documentos .PDF ou outros!
 ALTER TABLE Documentos
 ALTER COLUMN Documento TYPE bytea;
@@ -56,3 +65,9 @@ ALTER COLUMN Documento TYPE bytea;
 ALTER TABLE UtenteLogin DROP CONSTRAINT UtenteLogin_pkey;
 ALTER TABLE UtenteLogin ADD CONSTRAINT PK_UtenteLogin PRIMARY KEY (UtenteUtenteID);
 ALTER TABLE UtenteLogin ADD CONSTRAINT UQ_Email UNIQUE (Email);
+
+ALTER TABLE PedidoAvaliaçãoMédica
+ALTER COLUMN dataPedido TYPE DATE USING to_date(dataPedido::TEXT, 'YYYYMMDD');
+
+ALTER TABLE PedidoAvaliaçãoMédica
+ALTER COLUMN LocalidadePedido TYPE TEXT;
