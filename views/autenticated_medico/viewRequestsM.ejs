@@ -24,7 +24,7 @@
     </header>
 
     <% if (pedidoAvaliacaoMedicaRecords && pedidoAvaliacaoMedicaRecords.length > 0) { %>
-        <h1>Pedido Avaliação Médica History</h1>
+        <h1>Lista de pedidos de avaliação médica</h1>
         <table>
             <tr>
                 <th>Data Pedido</th>
@@ -42,8 +42,8 @@
                     <td><%= pedidoAvaliacaoMedicaRecords[i].cc %></td>
                     <td><%= pedidoAvaliacaoMedicaRecords[i].documento %></td>
                     <td>
-                        <a href="/evaluate/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Evaluate</a> |
-                        <a href="/createDiagnostico/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Create DiagnosticoMédico</a>
+                        <a href="/evaluate/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Avaliar Utente</a> |
+                        <a href="/createDiagnostico/<%= pedidoAvaliacaoMedicaRecords[i].pedidoavaliacaomedicaid %>">Criar Diagnostico Médico</a>
                     </td>
                 </tr>
             <% } %>
