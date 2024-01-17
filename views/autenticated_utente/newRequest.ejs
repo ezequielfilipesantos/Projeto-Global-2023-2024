@@ -19,7 +19,7 @@
             <a href="/requestsHistory">Historico de Pedidos</a>
           </div>
           <div class="user-info">
-            <span>Bem-Vindo <%= userName %></span>
+            <span>Bem-Vindo </span>
             <a href="/logout">Terminar-Sessao</a>
           </div>
         </nav>
@@ -27,27 +27,27 @@
 
     <h1>Adicionar Pedido Avaliação Médica</h1>
     <form method="POST" action="/newRequest">
-      <!-- Utente ID field removed -->
-  
       <label>Data Pedido:</label>
-      <span id="dataPedido"><%= currentDate %></span>
-
-  
+      <p>Data Atual: <%= currentDate %></p>
+      <input type="text" id="dataPedido" name="p_dataPedido" value="<%= currentDate %>" readonly>
       <label for="localidadePedido">Localidade Pedido:</label>
-      <input type="text" id="localidadePedido" name="localidadePedido" required>
-     
-      <label for="efeito">Efeito:</label>
-      <select id="efeito" name="efeito" required>
-        <option value="" disabled selected>Select an option</option> <!-- Placeholder -->
-        <% efeitoOptions.forEach((efeito) => { %>
-          <option value="<%= efeito.IDEfeito %>"><%= efeito.Descritivo %></option>
-        <% }); %>
-      </select>
+      <input type="text" id="localidadePedido" name="p_LocalidadePedido" required>
       
+      <label for="efeito">Efeito:</label>
+      <div>
+          <p>Escolha um efeito:</p>
+          <ul>
+            <% efeitoOptions.forEach((efeito) => { %>
+              <li><%= efeito.IDEfeito %> - <%= efeito.Descritivo %></li>
+            <% }); %>
+          </ul>
+      </div>
+      <input type="text" id="efeito" name="p_EfeitoIDEfeito" placeholder="Digite o ID do efeito" required>
+
       
       <label for="teCAssinado">TeC Assinado:</label>
-      <input type="checkbox" id="teCAssinado" name="teCAssinado">
-  
+      <input type="checkbox" id="teCAssinado" name="p_TeCAssinado">
+    
       <h2>Anexo:</h2>
       <input type="file" id="anexo" name="Anexos/Documentos/Exames">
   

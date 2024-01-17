@@ -45,20 +45,14 @@ ADD COLUMN PedidoEnviadoParaJuntaMédica BOOLEAN;
 ------
 ALTER TABLE PedidoAvaliaçãoMédica
 ADD COLUMN PedidoAvaliacaoMedicaID SERIAL PRIMARY KEY;
+
+ALTER TABLE PedidoAvaliaçãoMédica DROP CONSTRAINT PedidoAvaliaçãoMédica_pkey;
+ALTER TABLE PedidoAvaliaçãoMédica ADD COLUMN PedidoAvaliacaoMedicaID SERIAL PRIMARY KEY;
+
 --------Documentos .PDF ou outros!
 ALTER TABLE Documentos
 ALTER COLUMN Documento TYPE bytea;
 
-
-----TEMP----
-CREATE TABLE PedidoAvaliaçãoMédica (UtenteUtenteID int4 NOT NULL, dataPedido int4, LocalidadePedido int4, TeCAssinado bool, EfeitoIDEfeito int4 NOT NULL, EstadoIDEstado int4 NOT NULL, PRIMARY KEY (UtenteUtenteID));
-ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval601144 FOREIGN KEY (UtenteUtenteID) REFERENCES Utente (UtenteID);
-ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval946019 FOREIGN KEY (EfeitoIDEfeito) REFERENCES EfeitoPedido (IDEfeito);
-ALTER TABLE PedidoAvaliaçãoMédica ADD CONSTRAINT FKPedidoAval992581 FOREIGN KEY (EstadoIDEstado) REFERENCES Estado (IDEstado);
-
-CREATE TABLE Utente (UtenteID SERIAL NOT NULL, NomeUtente varchar(100), NISS int8, CC varchar(12), LocalidadeEmissãoDSIC varchar(255), DataEmissãoDSIC date, DataValidadeCC date, NIF varchar(9), DataNascimento date, FreguesiaNaturalidade varchar(255), ConcelhoNaturalidade varchar(255), PaisNaturalidade varchar(255), CartãoResidência int4, UtentePréviamenteSubmetidoAJM bool, PRIMARY KEY (UtenteID));
-CREATE TABLE UtenteContacto (Telefone int4 NOT NULL, UtenteIdentificaçãoUtenteID int4 NOT NULL, PRIMARY KEY (Telefone, UtenteIdentificaçãoUtenteID));
-
-CREATE TABLE Documentos (Ordem int4 NOT NULL, PedidoAvaliaçãoMédicaUtenteUtenteID int4 NOT NULL, Documento varchar(255), PRIMARY KEY (Ordem, PedidoAvaliaçãoMédicaUtenteUtenteID));
-ALTER TABLE Documentos ADD CONSTRAINT FKDocumentos679363 FOREIGN KEY (PedidoAvaliaçãoMédicaUtenteUtenteID) REFERENCES PedidoAvaliaçãoMédica (UtenteUtenteID);
-
+ALTER TABLE UtenteLogin DROP CONSTRAINT UtenteLogin_pkey;
+ALTER TABLE UtenteLogin ADD CONSTRAINT PK_UtenteLogin PRIMARY KEY (UtenteUtenteID);
+ALTER TABLE UtenteLogin ADD CONSTRAINT UQ_Email UNIQUE (Email);

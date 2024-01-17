@@ -19,6 +19,15 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+// Define the middleware to extract userID and userEmail
+app.use('/protectedRoute', (req, res, next) => {
+  const userName = req.session.userName;
+  const userID = req.session.userID;
+  const userEmail = req.session.userEmail;
+  // Use userID and userEmail as needed
+  next(); // Continue processing the request
+});
+
 // Express Configuration
 app.set('view engine', 'ejs');
 app.use(express.json());
@@ -31,6 +40,8 @@ const loginRouter = require('./routes/Public_Routes/loginRouter')(pool);
 const registerRouter = require('./routes/Public_Routes/registerRouter')(pool);
 const editUserDetails = require('./routes/Utente/editUserDetailsRouter')(pool);
 const requestsHistoryRouter = require('./routes/Utente/requestsHistoryRouter')(pool);
+const newRequestRouter = require('./routes/Utente/newRequestRouter')(pool);
+
 const authMiddleware = require('./middleware/authMiddleware');
 
 // Medico

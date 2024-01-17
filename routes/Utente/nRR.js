@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = function(pool) {
-  // Log that the router is connected
-  console.log('New Request Router is connected!');
-
   // Middleware to pass currentDate and efeitoOptions
   router.use(async (req, res, next) => {
     try {
@@ -34,7 +31,7 @@ module.exports = function(pool) {
         // Render the template with currentDate and efeitoOptions
         res.render('autenticated_utente/newRequest'), {
           currentDate: res.locals.currentDate,
-          efeitoOptions: res.locals.efeitoOptions,
+           efeitoOptions: res.locals.efeitoOptions,
         }
       } catch (error) {
         console.error(error);
@@ -63,20 +60,20 @@ module.exports = function(pool) {
           p_TeCAssinado,
           p_EfeitoIDEfeito,
         } = req.body;
-
+        
         const teCAssinado = req.body.p_TeCAssinado === 'on'; // Convert the checkbox value to a boolean
         // Use utenteID and currentDate for p_dataPedido
         const queryTextNewRequest = `
           SELECT addPedidoAvaliacaoMedica(
             $1, $2, $3, $4, $5, true
           )`;
-        const values = [
-          utenteID,
-          res.locals.currentDate, // Use currentDate from res.locals
-          p_LocalidadePedido,
-          teCAssinado, // Use the modified value
-          p_EfeitoIDEfeito
-        ];
+          const values = [
+            utenteID,
+            res.locals.currentDate, // Use currentDate from res.locals
+            p_LocalidadePedido,
+            teCAssinado, // Use the modified value
+            p_EfeitoIDEfeito
+          ];
         console.log('Executing SQL Query:', queryTextNewRequest);
         console.log('Values:', values);
 
