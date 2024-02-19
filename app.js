@@ -2,10 +2,11 @@
 const express = require('express');
 const session = require('express-session');
 const { Pool } = require('pg');
+
 const authMiddleware = require('./middleware/authMiddleware');
+const loginRouter = require('./routes/loginRouter'); // Import the loginRouter
 const indexRouter = require('./routes/indexRouter');
 const registerRouter = require('./routes/registerRouter'); // Import the registerRouter
-const loginRouter = require('./routes/loginRouter'); // Import the loginRouter
 
 const app = express();
 const port = 3000;
@@ -14,7 +15,7 @@ const port = 3000;
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'MedicalDB1',
+    database: 'juntadb',
     password: 'magali712',
     port: 5432,
 });
